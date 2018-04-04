@@ -1,4 +1,4 @@
-package com.ifood;
+package com.ifood.model;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

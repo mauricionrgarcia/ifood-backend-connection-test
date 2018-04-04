@@ -1,4 +1,4 @@
-package com.ifood;
+package com.ifood.model;
 
 /**
  * Reason accepted for unavailabilities.

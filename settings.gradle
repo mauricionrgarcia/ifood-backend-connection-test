@@ -1,3 +1,5 @@
 rootProject.name = 'ifood-connection'
 
+include ":interface"
 include ":model"
+include ":infrastructure"

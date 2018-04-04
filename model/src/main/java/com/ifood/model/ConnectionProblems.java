@@ -1,4 +1,4 @@
-package com.ifood;
+package com.ifood.model;
 
 /**
  * Problems found related to connection.
