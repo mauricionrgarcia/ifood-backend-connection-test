@@ -15,8 +15,8 @@ public class RestaurantAvailabilityTest {
     @Test
     public void testIfOnlineWithoutScheduledUnavailability(){
         List<UnavailabilitySchedule> unavailabilitySchedule = List.of(
-                new UnavailabilitySchedule(LocalDateTime.now().minusHours(2), LocalDateTime.now().minusHours(1)), //
-                new UnavailabilitySchedule(LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2))
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().minusHours(2), LocalDateTime.now().minusHours(1)), //
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2))
         );
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedule);
         restaurantAvailability.setClock(Clock.fixed(getTodayAvailableAppTime(), ZoneId.systemDefault()));
@@ -26,8 +26,8 @@ public class RestaurantAvailabilityTest {
     @Test
     public void testIfOfflineWithScheduledUnavailability(){
         List<UnavailabilitySchedule> unavailabilitySchedule = List.of(
-                new UnavailabilitySchedule(LocalDateTime.now().minusHours(1), LocalDateTime.now().plusHours(1)), //
-                new UnavailabilitySchedule(LocalDateTime.now().plusHours(4), LocalDateTime.now().plusHours(5))
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().minusHours(1), LocalDateTime.now().plusHours(1)), //
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().plusHours(4), LocalDateTime.now().plusHours(5))
         );
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedule);
         restaurantAvailability.setClock(Clock.fixed(getTodayAvailableAppTime(), ZoneId.systemDefault()));

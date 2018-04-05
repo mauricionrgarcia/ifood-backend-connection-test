@@ -1,5 +1,6 @@
 package com.ifood.model;
 
+import com.ifood.entity.UnavailabilityScheduleEntity;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public class UnavailabilityScheduleTest {
     public void testSchedule(){
         LocalDateTime initialSchedule = LocalDateTime.now();
         LocalDateTime finalSchedule = LocalDateTime.now().plusMinutes(1);
-        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(initialSchedule, finalSchedule);
+        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, initialSchedule, finalSchedule);
         assertNotNull(unavailabilitySchedule);
     }
 
@@ -20,7 +21,7 @@ public class UnavailabilityScheduleTest {
     public void testIfDateIsBetweenUnavailable(){
         LocalDateTime initialSchedule = LocalDateTime.now();
         LocalDateTime finalSchedule = LocalDateTime.now().plusMinutes(1);
-        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(initialSchedule, finalSchedule);
+        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, initialSchedule, finalSchedule);
         assertTrue(unavailabilitySchedule.isUnavailable(LocalDateTime.now()));
     }
 
@@ -28,13 +29,13 @@ public class UnavailabilityScheduleTest {
     public void testIfDateIsNotBetweenUnavailable(){
         LocalDateTime initialSchedule = LocalDateTime.now().minusHours(2);
         LocalDateTime finalSchedule = LocalDateTime.now().minusMinutes(1);
-        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(initialSchedule, finalSchedule);
+        UnavailabilitySchedule unavailabilitySchedule = new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, initialSchedule, finalSchedule);
         assertFalse(unavailabilitySchedule.isUnavailable(LocalDateTime.now()));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfInitialScheduleIsGreaterThanFinalSchedule(){
-        new UnavailabilitySchedule(LocalDateTime.now(), LocalDateTime.now().minusMinutes(1));
+        new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, LocalDateTime.now(), LocalDateTime.now().minusMinutes(1));
     }
 
 }
