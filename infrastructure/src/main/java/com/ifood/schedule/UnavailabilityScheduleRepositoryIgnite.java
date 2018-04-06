@@ -22,8 +22,10 @@ public class UnavailabilityScheduleRepositoryIgnite implements UnavailabilitySch
     }
 
     @Override
-    public void deleteSchedule(String scheduleId) {
-
+    public void deleteSchedule(String scheduleCode) {
+        list.stream() //
+                .filter(unavailabilityScheduleEntity -> unavailabilityScheduleEntity.getCode().equals(scheduleCode)).findFirst()
+                .ifPresent(unavailabilityScheduleEntity -> list.remove(unavailabilityScheduleEntity));
     }
 
     @Override

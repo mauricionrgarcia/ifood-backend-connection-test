@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
  */
 public class UnavailabilitySchedule {
 
+    private String code;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime scheduleStart;
@@ -37,9 +39,14 @@ public class UnavailabilitySchedule {
     }
 
     public UnavailabilitySchedule(UnavailabilityScheduleEntity unavailabilityScheduleEntity) {
+        this.code = unavailabilityScheduleEntity.getCode();
         this.unavailabilityReason = UnavailabilityReason.valueOf(unavailabilityScheduleEntity.getReason());
         this.scheduleStart = unavailabilityScheduleEntity.getScheduleStart();
         this.scheduleEnd = unavailabilityScheduleEntity.getScheduleEnd();
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public LocalDateTime getScheduleStart() {

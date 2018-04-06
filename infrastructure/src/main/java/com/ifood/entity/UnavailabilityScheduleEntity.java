@@ -2,14 +2,20 @@ package com.ifood.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class UnavailabilityScheduleEntity {
+
     private RestaurantEntity restaurant;
     private String reason;
     private LocalDateTime scheduleStart;
     private LocalDateTime scheduleEnd;
+    private String code;
+
+    public UnavailabilityScheduleEntity(){}
 
     public UnavailabilityScheduleEntity(RestaurantEntity restaurant, String reason, LocalDateTime scheduleStart, LocalDateTime scheduleEnd) {
+        this.code = UUID.randomUUID().toString();
         this.restaurant = restaurant;
         this.reason = reason;
         this.scheduleStart = scheduleStart;
@@ -46,5 +52,9 @@ public class UnavailabilityScheduleEntity {
     public int hashCode() {
 
         return Objects.hash(reason, scheduleStart, scheduleEnd);
+    }
+
+    public String getCode() {
+        return code;
     }
 }
