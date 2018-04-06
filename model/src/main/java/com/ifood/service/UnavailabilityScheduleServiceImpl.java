@@ -4,8 +4,8 @@ import com.ifood.entity.RestaurantEntity;
 import com.ifood.entity.UnavailabilityScheduleEntity;
 import com.ifood.model.UnavailabilityReason;
 import com.ifood.model.UnavailabilitySchedule;
-import com.ifood.schedule.RestaurantRepository;
-import com.ifood.schedule.UnavailabilityScheduleRepository;
+import com.ifood.repository.RestaurantRepository;
+import com.ifood.repository.UnavailabilityScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
 
         boolean unavailabilityExists = unavailabilityScheduleRepository.exists(restaurantCode, startDate, endDate);
         if(unavailabilityExists){
-            throw new IllegalArgumentException("Unavailability schedule already exists.");
+            throw new IllegalArgumentException("Unavailability repository already exists.");
         }
 
         unavailabilityScheduleRepository.saveUnavailabilitySchedule(new UnavailabilityScheduleEntity(restaurant, reason.name(), startDate, endDate));

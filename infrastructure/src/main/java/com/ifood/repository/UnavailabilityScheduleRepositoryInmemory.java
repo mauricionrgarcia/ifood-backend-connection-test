@@ -1,4 +1,4 @@
-package com.ifood.schedule;
+package com.ifood.repository;
 
 import com.ifood.entity.UnavailabilityScheduleEntity;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UnavailabilityScheduleRepositoryIgnite implements UnavailabilityScheduleRepository {
+public class UnavailabilityScheduleRepositoryInmemory implements UnavailabilityScheduleRepository {
     private static List<UnavailabilityScheduleEntity> list = new ArrayList<>();
 
     @Override

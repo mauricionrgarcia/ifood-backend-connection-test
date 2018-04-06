@@ -30,7 +30,7 @@ public class UnavailabilitySchedule {
 
     public UnavailabilitySchedule(UnavailabilityReason unavailabilityReason, LocalDateTime scheduleStart, LocalDateTime scheduleEnd) {
         if (scheduleStart.isAfter(scheduleEnd)){
-            throw new IllegalArgumentException("Initial schedule is greater than the final schedule.");
+            throw new IllegalArgumentException("Initial repository is greater than the final repository.");
         }
 
         this.scheduleStart = scheduleStart;

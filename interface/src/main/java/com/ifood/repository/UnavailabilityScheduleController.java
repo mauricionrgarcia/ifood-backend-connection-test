@@ -1,4 +1,4 @@
-package com.ifood.schedule;
+package com.ifood.repository;
 
 import com.ifood.model.UnavailabilitySchedule;
 import com.ifood.service.UnavailabilityScheduleService;
@@ -19,8 +19,8 @@ public class UnavailabilityScheduleController {
     @Autowired
     private UnavailabilityScheduleService unavailabilityScheduleService;
 
-    @ApiOperation(value="Fetch the unavailability schedule for a given period.")
-    @RequestMapping(value="/connection/schedule/unavailability/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
+    @ApiOperation(value="Fetch the unavailability repository for a given period.")
+    @RequestMapping(value="/connection/repository/unavailability/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
     public ResponseEntity fetchUnavailabilitySchedule(
             @PathVariable("restaurant_code") String restaurantCode, //
             @PathVariable("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
@@ -32,20 +32,23 @@ public class UnavailabilityScheduleController {
         return ResponseEntity.ok(unavailabilitySchedule);
     }
 
-    @ApiOperation(value="Insert an unavailability schedule.")
-    @RequestMapping(value="/connection/schedule/unavailability", method = RequestMethod.POST)
+    @ApiOperation(value="Insert an unavailability repository.")
+    @RequestMapping(value="/connection/repository/unavailability", method = RequestMethod.POST)
     public ResponseEntity insertUnavailabilitySchedule(
             @RequestBody UnavailabilityScheduleInsertFeature unavailabilityScheduleFeature){
 
-        unavailabilityScheduleService.insertSchedule(
-                unavailabilityScheduleFeature.getRestaurantCode(), unavailabilityScheduleFeature.getUnavailabilityReason(), unavailabilityScheduleFeature.getScheduleStart(), unavailabilityScheduleFeature.getScheduleEnd());
+        unavailabilityScheduleService.insertSchedule( //
+                unavailabilityScheduleFeature.getRestaurantCode(), //
+                unavailabilityScheduleFeature.getUnavailabilityReason(), //
+                unavailabilityScheduleFeature.getScheduleStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), //
+                unavailabilityScheduleFeature.getScheduleEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value="Delete an unavailability schedule.")
-    @RequestMapping(value="/connection/schedule/unavailability/{schedule_id}", method = RequestMethod.POST)
-    public ResponseEntity deleteUnavailabilitySchedule(@PathVariable("schedule_id") String scheduleId){
+    @RequestMapping(value="/connection/repository/unavailability/{schedule_code}", method = RequestMethod.POST)
+    public ResponseEntity deleteUnavailabilitySchedule(@PathVariable("schedule_code") String scheduleId){
 
         unavailabilityScheduleService.deleteSchedule(scheduleId);
 

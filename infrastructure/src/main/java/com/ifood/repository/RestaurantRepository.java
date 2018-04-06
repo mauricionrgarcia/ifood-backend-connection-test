@@ -1,4 +1,4 @@
-package com.ifood.schedule;
+package com.ifood.repository;
 
 import com.ifood.entity.RestaurantEntity;
 
