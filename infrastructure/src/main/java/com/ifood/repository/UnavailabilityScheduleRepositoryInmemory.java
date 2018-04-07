@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UnavailabilityScheduleRepositoryInmemory implements UnavailabilityScheduleRepository {
@@ -18,7 +19,12 @@ public class UnavailabilityScheduleRepositoryInmemory implements UnavailabilityS
 
     @Override
     public List<UnavailabilityScheduleEntity> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
-        return list;
+        return list.stream().filter(unavailabilityScheduleEntity ->
+                (unavailabilityScheduleEntity.getScheduleStart().isAfter(startDate) && unavailabilityScheduleEntity.getScheduleEnd().isBefore(endDate)) ||
+                        (startDate.isAfter(unavailabilityScheduleEntity.getScheduleStart()) && startDate.isBefore(unavailabilityScheduleEntity.getScheduleEnd()) ||
+                        (endDate.isAfter(unavailabilityScheduleEntity.getScheduleStart()) && endDate.isBefore(unavailabilityScheduleEntity.getScheduleEnd())))
+
+        ).collect(Collectors.toList());
     }
 
     @Override

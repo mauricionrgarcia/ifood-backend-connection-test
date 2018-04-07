@@ -17,7 +17,7 @@ public class UnavailabilityScheduleController {
     private UnavailabilityScheduleService unavailabilityScheduleService;
 
     @ApiOperation(value="Fetch the repository repository for a given period.")
-    @RequestMapping(value="/connection/repository/repository/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
+    @RequestMapping(value="/connection/schedule/unavailability/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
     public ResponseEntity fetchUnavailabilitySchedule(
             @PathVariable("restaurant_code") String restaurantCode, //
             @PathVariable("start_date") String startDate,
@@ -30,21 +30,21 @@ public class UnavailabilityScheduleController {
     }
 
     @ApiOperation(value="Insert an repository repository.")
-    @RequestMapping(value="/connection/repository/repository", method = RequestMethod.POST)
+    @RequestMapping(value="/connection/schedule/unavailability", method = RequestMethod.POST)
     public ResponseEntity insertUnavailabilitySchedule(
-            @RequestBody UnavailabilityScheduleInsertFeatureRequest unavailabilityScheduleFeature){
+            @RequestBody com.ifood.repository.UnavailabilityScheduleInsertFeatureRequest unavailabilityScheduleFeature){
 
-        unavailabilityScheduleService.insertSchedule( //
+        String code = unavailabilityScheduleService.insertSchedule( //
                 unavailabilityScheduleFeature.getRestaurantCode(), //
                 unavailabilityScheduleFeature.getUnavailabilityReason(), //
                 unavailabilityScheduleFeature.getScheduleStart(), //
                 unavailabilityScheduleFeature.getScheduleEnd());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(code);
     }
 
     @ApiOperation(value="Delete an repository schedule.")
-    @RequestMapping(value="/connection/repository/repository/{schedule_code}", method = RequestMethod.POST)
+    @RequestMapping(value="/connection/schedule/unavailability/{schedule_code}", method = RequestMethod.POST)
     public ResponseEntity deleteUnavailabilitySchedule(@PathVariable("schedule_code") String scheduleId){
 
         unavailabilityScheduleService.deleteSchedule(scheduleId);

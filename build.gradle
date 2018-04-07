@@ -29,6 +29,37 @@ subprojects {
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
+
+    configurations {
+        sourceCompatibility = 1.9
+        targetCompatibility = 1.9
+
+        compileJava.options.encoding = 'UTF-8'
+        compileTestJava.options.encoding = 'UTF-8'
+
+        acceptanceTestCompile.extendsFrom testCompile
+        acceptanceTestRuntime.extendsFrom testRuntime
+    }
+
+    sourceSets {
+        acceptanceTest {
+            java {
+                compileClasspath += main.output + test.output
+                runtimeClasspath += main.output + test.output
+                srcDir file('src/acceptanceTest/java')
+            }
+        }
+    }
+
+    task acceptanceTest(type: Test) {
+        setTestClassesDirs(sourceSets.acceptanceTest.output.getClassesDirs())
+        classpath = sourceSets.acceptanceTest.runtimeClasspath
+
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
 }
 
 project(":interface"){
@@ -41,6 +72,11 @@ project(":interface"){
         compile group:'io.springfox', name: 'springfox-swagger-ui', version: springfoxSwagger
         compile group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.1.0'
         compile project(":model")
+
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+        testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'
+
+
     }
 }
 

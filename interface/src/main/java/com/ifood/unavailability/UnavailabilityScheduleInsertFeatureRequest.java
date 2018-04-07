@@ -18,6 +18,13 @@ public class UnavailabilityScheduleInsertFeatureRequest {
     public UnavailabilityScheduleInsertFeatureRequest() {
     }
 
+    public UnavailabilityScheduleInsertFeatureRequest(String restaurantCode, String scheduleStart, String scheduleEnd, UnavailabilityReason unavailabilityReason) {
+        this.restaurantCode = restaurantCode;
+        this.scheduleStart = scheduleStart;
+        this.scheduleEnd = scheduleEnd;
+        this.unavailabilityReason = unavailabilityReason;
+    }
+
     public String getRestaurantCode() {
         return restaurantCode;
     }

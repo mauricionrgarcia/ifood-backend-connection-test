@@ -20,8 +20,9 @@ public class HealthController {
 
     @ApiOperation(value="Receive the signal sent by the restaurant.")
     @RequestMapping(value = "/connection/health/{restaurant_code}", method = RequestMethod.POST)
-    public void receiveHealthSignal(@PathVariable("restaurant_code") String restaurantCode){
+    public ResponseEntity receiveHealthSignal(@PathVariable("restaurant_code") String restaurantCode){
         healthService.receiveHealthSignal(restaurantCode);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value="Search by the restaurant health for a given pediod.")
@@ -34,7 +35,7 @@ public class HealthController {
     }
 
     @ApiOperation(value="Search by the restaurants health for a given pediod.")
-    @RequestMapping(value = "/connection/health/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/connection/health/history/list", method = RequestMethod.POST)
     public ResponseEntity fetchHealthHistory(
             @RequestBody RestaurantHealthHistoriesListRequest restaurantHealthHistoriesListRequest){
 
