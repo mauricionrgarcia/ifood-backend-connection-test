@@ -1,10 +1,9 @@
-package com.ifood.repository;
+package com.ifood.unavailability;
 
 import com.ifood.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class RestaurantRepositoryInmemory implements RestaurantRepository {

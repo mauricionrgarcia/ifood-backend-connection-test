@@ -1,4 +1,4 @@
-package com.ifood.repository;
+package com.ifood.unavailability;
 
 import com.ifood.entity.RestaurantEntity;
 

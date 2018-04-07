@@ -2,7 +2,7 @@ package com.ifood.service;
 
 import com.ifood.entity.ConnectionHistoryEntity;
 import com.ifood.model.ConnectionHealthHistory;
-import com.ifood.repository.HealthRepository;
+import com.ifood.unavailability.HealthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +22,14 @@ public class HealthServiceImpl implements HealthService {
     }
 
     @Override
-    public ConnectionHealthHistory findHealthHistory(String restaurantCode) {
-        return new ConnectionHealthHistory(healthRepository.findHealthHistory(restaurantCode));
+    public List<ConnectionHealthHistory> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
+        return healthRepository.findHealthHistory(restaurantCode, startDate, endDate).stream() //
+                .map(ConnectionHealthHistory::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<ConnectionHealthHistory> findHealthHistory(List<String> restaurantCodes) {
-        return healthRepository.findHealthHistory(restaurantCodes).stream() //
+    public List<ConnectionHealthHistory> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate) {
+        return healthRepository.findHealthHistory(restaurantCodes, startDate, endDate).stream() //
                 .map(ConnectionHealthHistory::new).collect(Collectors.toList());
     }
 
