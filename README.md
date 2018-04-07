@@ -1,4 +1,4 @@
-# iFood Backend Test - Connection
+# iFood Backend Test - Connection  [![Build Status](https://travis-ci.org/mushira4/ifood-backend-connection-test.svg?branch=master)](https://travis-ci.org/mushira4/ifood-backend-connection)
 
 Our goal is to be the best delivery company in the world. In order to achieve that we must do our best to manage the connection between iFood platform and all of our 100.000 restaurants.
 
