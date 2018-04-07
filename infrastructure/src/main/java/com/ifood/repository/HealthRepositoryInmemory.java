@@ -1,4 +1,4 @@
-package com.ifood.unavailability;
+package com.ifood.repository;
 
 import com.ifood.entity.ConnectionHistoryEntity;
 import org.springframework.stereotype.Repository;

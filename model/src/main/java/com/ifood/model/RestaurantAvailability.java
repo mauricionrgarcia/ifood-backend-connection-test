@@ -29,9 +29,9 @@ public class RestaurantAvailability {
     }
 
     /**
-     * If there is not scheduled unavailability for the current time and is between open time.
+     * If there is not scheduled repository for the current time and is between open time.
      *
-     * @return true is there is not a scheduled unavailability.
+     * @return true is there is not a scheduled repository.
      */
     public boolean isOnline(){
         return !isAppUnavailable() && !isScheduledUnavailable();
@@ -48,9 +48,9 @@ public class RestaurantAvailability {
     }
 
     /**
-     * Check if the current time is between unavailability scheduled.
+     * Check if the current time is between repository scheduled.
      *
-     * @return True if there is between unavailability scheduled
+     * @return True if there is between repository scheduled
      */
     private boolean isScheduledUnavailable() {
         if (availabilityUnavailabilitySchedule == null) return false;

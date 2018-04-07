@@ -9,7 +9,7 @@ import com.ifood.entity.UnavailabilityScheduleEntity;
 import java.time.LocalDateTime;
 
 /**
- * Scheduled date for an unavailability
+ * Scheduled date for an repository
  */
 public class UnavailabilitySchedule {
 
@@ -30,7 +30,7 @@ public class UnavailabilitySchedule {
 
     public UnavailabilitySchedule(UnavailabilityReason unavailabilityReason, LocalDateTime scheduleStart, LocalDateTime scheduleEnd) {
         if (scheduleStart.isAfter(scheduleEnd)){
-            throw new IllegalArgumentException("Initial unavailability is greater than the final unavailability.");
+            throw new IllegalArgumentException("Initial repository is greater than the final repository.");
         }
 
         this.scheduleStart = scheduleStart;
@@ -62,9 +62,9 @@ public class UnavailabilitySchedule {
     }
 
     /**
-     * Check if the time time provided is between the scheduled unavailability.
+     * Check if the time time provided is between the scheduled repository.
      * @param localDateTime - The time the will be checked
-     * @return true if the given time is between the unavailability time.
+     * @return true if the given time is between the repository time.
      */
     public boolean isUnavailable(LocalDateTime localDateTime){
         return localDateTime.isAfter(scheduleStart) && localDateTime.isBefore(scheduleEnd);

@@ -2,7 +2,7 @@ package com.ifood.service;
 
 import com.ifood.entity.ConnectionHistoryEntity;
 import com.ifood.model.ConnectionHealthHistory;
-import com.ifood.unavailability.HealthRepository;
+import com.ifood.repository.HealthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
