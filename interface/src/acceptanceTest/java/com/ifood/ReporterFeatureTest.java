@@ -17,11 +17,24 @@ public class ReporterFeatureTest {
     @Test
     public void shouldFetchTheConnectionReport(){
         String restaurantCode = "restaurant1";
+
         sendHealthSignal(restaurantCode);
+        waitSignal();
         sendHealthSignal(restaurantCode);
+        waitSignal();
         sendHealthSignal(restaurantCode);
+        waitSignal();
         sendHealthSignal(restaurantCode);
+
         resquestReport(restaurantCode, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
+    }
+
+    private void waitSignal() {
+        try {
+            Thread.sleep(100);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendHealthSignal(String restaurantCode) {
