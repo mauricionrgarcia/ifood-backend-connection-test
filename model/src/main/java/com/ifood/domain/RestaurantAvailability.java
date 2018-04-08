@@ -1,4 +1,4 @@
-package com.ifood.model;
+package com.ifood.domain;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -33,8 +33,9 @@ public class RestaurantAvailability {
      *
      * @return true is there is not a scheduled repository.
      */
-    public boolean isOnline(){
-        return !isAppUnavailable() && !isScheduledUnavailable();
+    public boolean isCurrentlyOpen(){
+        LocalDateTime currentTime = LocalDateTime.now(clock);
+        return !isAppUnavailable(currentTime) && !isScheduledUnavailable(currentTime);
     }
 
     /**
@@ -42,9 +43,8 @@ public class RestaurantAvailability {
      *
      * @return True if the currentTime is outside the availability window.
      */
-    private boolean isAppUnavailable() {
-        return LocalDateTime.now(clock).getHour() < 10 || //
-                (LocalDateTime.now(clock).getHour() == 23 && LocalDateTime.now(clock).getMinute() > 0);
+    public boolean isAppUnavailable(LocalDateTime time) {
+        return time.getHour() < 10 || time.getHour() == 23;
     }
 
     /**
@@ -52,11 +52,10 @@ public class RestaurantAvailability {
      *
      * @return True if there is between repository scheduled
      */
-    private boolean isScheduledUnavailable() {
+    public boolean isScheduledUnavailable(LocalDateTime time) {
         if (availabilityUnavailabilitySchedule == null) return false;
 
-        LocalDateTime currentTime = LocalDateTime.now();
         return availabilityUnavailabilitySchedule.stream() //
-                .anyMatch(unavailabilitySchedule -> unavailabilitySchedule.isUnavailable(currentTime));
+                .anyMatch(unavailabilitySchedule -> unavailabilitySchedule.isUnavailable(time));
     }
 }

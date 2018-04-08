@@ -1,4 +1,4 @@
-package com.ifood.model;
+package com.ifood.domain;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,17 +17,22 @@ public class RestaurantConnection {
 
     private List<ConnectionHealthSignal> connectionHealthSignals;
 
+    private final List<ConnectionPeriodAssessed> connectionFailed;
+
+    private final List<ConnectionPeriodAssessed> connectionSucceded;
+
     public RestaurantConnection(List<ConnectionHealthSignal> connectionHealthSignals) {
         this.connectionHealthSignals = connectionHealthSignals;
+        this.connectionFailed = new ArrayList<>();
+        this.connectionSucceded = new ArrayList<>();
+        searchForConnectionsFailures();
     }
 
     /**
      * Search by connections problems that happened. It is considered the ACCEPTABLE_SIGNAL_DELAY_IN_MINUTES
-     * @return Return the connections problems found.
-     * @throws IllegalStateException in case the connection could not be tested, eg: there is no tries to registered or less than two.
+     * @throws IllegalStateException in case the connection could not be tested, eg: there is no tries registered or less than two.
      */
-    public List<ConnectionProblems> searchForConnectionsFailures(){
-        List<ConnectionProblems>  connectionProblems = new ArrayList<>();
+    private void searchForConnectionsFailures(){
         if (connectionHealthSignals == null || connectionHealthSignals.size() < 2) {
             throw new IllegalStateException("It was not possible to check if the connection is OK.");
         }
@@ -41,13 +46,23 @@ public class RestaurantConnection {
             } else {
                 Duration differenceBetweenSignal = currentHealthSignal.getDifferenceBetweenSignal(nextConnectionHealthSignal);
                 if (differenceBetweenSignal.toMinutes() >= ACCEPTABLE_SIGNAL_DELAY_IN_MINUTES){
-                    connectionProblems.add(new ConnectionProblems(currentHealthSignal, nextConnectionHealthSignal));
-                    currentHealthSignal = nextConnectionHealthSignal;
+                    connectionFailed.add(new ConnectionPeriodAssessed(currentHealthSignal, nextConnectionHealthSignal));
+
+                } else {
+                    connectionSucceded.add(new ConnectionPeriodAssessed(currentHealthSignal, nextConnectionHealthSignal));
                 }
+                currentHealthSignal = nextConnectionHealthSignal;
             }
         }
-
-        return connectionProblems;
     }
 
+
+    public List<ConnectionPeriodAssessed> getConnectionsFailed(){
+        return connectionFailed;
+    }
+
+
+    public List<ConnectionPeriodAssessed> getConnectionsSucceded(){
+        return connectionSucceded;
+    }
 }

@@ -1,6 +1,6 @@
 package com.ifood.repository;
 
-import com.ifood.entity.ConnectionHistoryEntity;
+import com.ifood.entity.ConnectionHealthSignalEntity;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -11,34 +11,34 @@ import java.util.stream.Collectors;
 @Repository
 public class HealthRepositoryInmemory implements HealthRepository {
 
-    private List<ConnectionHistoryEntity> connectionHistories = new ArrayList<>();
+    private List<ConnectionHealthSignalEntity> connectionHistories = new ArrayList<>();
 
     @Override
-    public void insertSignalRegistry(ConnectionHistoryEntity connectionHistoryEntity) {
-        connectionHistories.add(connectionHistoryEntity);
+    public void insertSignalRegistry(ConnectionHealthSignalEntity connectionHealthSignalEntity) {
+        connectionHistories.add(connectionHealthSignalEntity);
     }
 
     @Override
-    public List<ConnectionHistoryEntity> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ConnectionHealthSignalEntity> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
         return connectionHistories.stream()
-                .filter(connectionHistoryEntity ->
-                        connectionHistoryEntity.getCode().equals(restaurantCode)
-                        && connectionHistoryEntity.getReceivedAt().isBefore(endDate)
-                        && connectionHistoryEntity.getReceivedAt().isAfter(startDate)
+                .filter(connectionHealthSignalEntity ->
+                        connectionHealthSignalEntity.getCode().equals(restaurantCode)
+                        && connectionHealthSignalEntity.getReceivedAt().isBefore(endDate)
+                        && connectionHealthSignalEntity.getReceivedAt().isAfter(startDate)
                 ).collect(Collectors.toList());
     }
 
     @Override
-    public List<ConnectionHistoryEntity> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate) {
-        final List<ConnectionHistoryEntity> connectionHistoryEntities = new ArrayList<>();
+    public List<ConnectionHealthSignalEntity> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate) {
+        final List<ConnectionHealthSignalEntity> connectionHistoryEntities = new ArrayList<>();
         restaurantCodes.forEach(restaurantCode -> {
-            ConnectionHistoryEntity connectionHistoryEntity = connectionHistories.stream()
-                    .filter(internalConnectionHistoryEntity ->
-                            internalConnectionHistoryEntity.getCode().equals(restaurantCode)
-                                    && internalConnectionHistoryEntity.getReceivedAt().isBefore(endDate)
-                                    && internalConnectionHistoryEntity.getReceivedAt().isAfter(startDate)
+            ConnectionHealthSignalEntity connectionHealthSignalEntity = connectionHistories.stream()
+                    .filter(internalConnectionHealthSignalEntity ->
+                            internalConnectionHealthSignalEntity.getCode().equals(restaurantCode)
+                                    && internalConnectionHealthSignalEntity.getReceivedAt().isBefore(endDate)
+                                    && internalConnectionHealthSignalEntity.getReceivedAt().isAfter(startDate)
                     ).findAny().get();
-            connectionHistoryEntities.add(connectionHistoryEntity);
+            connectionHistoryEntities.add(connectionHealthSignalEntity);
         });
         return connectionHistoryEntities;
     }

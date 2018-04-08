@@ -1,6 +1,6 @@
 package com.ifood.service;
 
-import com.ifood.model.ConnectionHealthHistory;
+import com.ifood.domain.ConnectionHealthSignal;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +9,5 @@ public interface HealthService {
 
     void receiveHealthSignal(String restaurantCode);
 
-    List<ConnectionHealthHistory> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
-
-    List<ConnectionHealthHistory> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate);
+    List<ConnectionHealthSignal> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
 }

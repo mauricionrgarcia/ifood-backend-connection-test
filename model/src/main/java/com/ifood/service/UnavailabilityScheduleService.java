@@ -1,7 +1,7 @@
 package com.ifood.service;
 
-import com.ifood.model.UnavailabilityReason;
-import com.ifood.model.UnavailabilitySchedule;
+import com.ifood.domain.UnavailabilityReason;
+import com.ifood.domain.UnavailabilitySchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;

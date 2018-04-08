@@ -2,8 +2,8 @@ package com.ifood.service;
 
 import com.ifood.entity.RestaurantEntity;
 import com.ifood.entity.UnavailabilityScheduleEntity;
-import com.ifood.model.UnavailabilityReason;
-import com.ifood.model.UnavailabilitySchedule;
+import com.ifood.domain.UnavailabilityReason;
+import com.ifood.domain.UnavailabilitySchedule;
 import com.ifood.repository.RestaurantRepository;
 import com.ifood.repository.UnavailabilityScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

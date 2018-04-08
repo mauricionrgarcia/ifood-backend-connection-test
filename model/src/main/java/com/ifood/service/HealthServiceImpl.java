@@ -1,7 +1,7 @@
 package com.ifood.service;
 
-import com.ifood.entity.ConnectionHistoryEntity;
-import com.ifood.model.ConnectionHealthHistory;
+import com.ifood.domain.ConnectionHealthSignal;
+import com.ifood.entity.ConnectionHealthSignalEntity;
 import com.ifood.repository.HealthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +18,13 @@ public class HealthServiceImpl implements HealthService {
 
     @Override
     public void receiveHealthSignal(String restaurantCode) {
-        healthRepository.insertSignalRegistry(new ConnectionHistoryEntity(restaurantCode, LocalDateTime.now()));
+        healthRepository.insertSignalRegistry(new ConnectionHealthSignalEntity(restaurantCode, LocalDateTime.now()));
     }
 
     @Override
-    public List<ConnectionHealthHistory> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ConnectionHealthSignal> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
         return healthRepository.findHealthHistory(restaurantCode, startDate, endDate).stream() //
-                .map(ConnectionHealthHistory::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ConnectionHealthHistory> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate) {
-        return healthRepository.findHealthHistory(restaurantCodes, startDate, endDate).stream() //
-                .map(ConnectionHealthHistory::new).collect(Collectors.toList());
+                .map(ConnectionHealthSignal::new).collect(Collectors.toList());
     }
 
 }

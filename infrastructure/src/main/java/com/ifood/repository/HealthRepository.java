@@ -1,15 +1,15 @@
 package com.ifood.repository;
 
-import com.ifood.entity.ConnectionHistoryEntity;
+import com.ifood.entity.ConnectionHealthSignalEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HealthRepository {
 
-    void insertSignalRegistry(ConnectionHistoryEntity connectionHistoryEntity);
+    void insertSignalRegistry(ConnectionHealthSignalEntity connectionHealthSignalEntity);
 
-    List<ConnectionHistoryEntity> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
+    List<ConnectionHealthSignalEntity> findHealthHistory(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<ConnectionHistoryEntity> findHealthHistory(List<String> restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
+    List<ConnectionHealthSignalEntity> findHealthHistory(List<String> restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
 }

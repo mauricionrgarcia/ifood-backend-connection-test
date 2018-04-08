@@ -1,7 +1,7 @@
-package com.ifood.repository;
+package com.ifood.unavailability;
 
 import com.ifood.DateFormatter;
-import com.ifood.model.UnavailabilityReason;
+import com.ifood.domain.UnavailabilityReason;
 
 import java.time.LocalDateTime;
 

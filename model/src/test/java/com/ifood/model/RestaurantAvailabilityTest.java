@@ -1,5 +1,9 @@
 package com.ifood.model;
 
+import com.ifood.domain.RestaurantAvailability;
+import com.ifood.domain.UnavailabilityReason;
+import com.ifood.domain.UnavailabilitySchedule;
+import com.ifood.helper.TestClock;
 import org.junit.Test;
 
 import java.time.*;
@@ -10,56 +14,57 @@ import static org.junit.Assert.assertTrue;
 
 public class RestaurantAvailabilityTest {
 
-    private static ZoneOffset BRAZIL_ZONEOFFSET = ZoneOffset.of("-3");
-
     @Test
-    public void testIfOnlineWithoutScheduledUnavailability(){
+    public void testIfCurrentlyOpenWithoutScheduledUnavailability(){
+        LocalDateTime now = LocalDateTime.now(TestClock.getTodayAvailableAppTime());
         List<UnavailabilitySchedule> unavailabilitySchedule = List.of(
-                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().minusHours(2), LocalDateTime.now().minusHours(1)), //
-                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2))
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, now.minusHours(2), now.minusHours(1)), //
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, now.plusHours(1), now.plusHours(2))
         );
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedule);
-        restaurantAvailability.setClock(Clock.fixed(getTodayAvailableAppTime(), ZoneId.systemDefault()));
-        assertTrue(restaurantAvailability.isOnline());
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
+        assertTrue(restaurantAvailability.isCurrentlyOpen());
     }
 
     @Test
-    public void testIfOfflineWithScheduledUnavailability(){
+    public void testCurrentlyClosedWithScheduledUnavailability(){
+        LocalDateTime now = LocalDateTime.now(TestClock.getTodayAvailableAppTime());
+
         List<UnavailabilitySchedule> unavailabilitySchedule = List.of(
-                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().minusHours(1), LocalDateTime.now().plusHours(1)), //
-                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS,LocalDateTime.now().plusHours(4), LocalDateTime.now().plusHours(5))
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, now.minusHours(1), now.plusHours(1)), //
+                new UnavailabilitySchedule(UnavailabilityReason.HOLIDAYS, now.plusHours(4), now.plusHours(5))
         );
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedule);
-        restaurantAvailability.setClock(Clock.fixed(getTodayAvailableAppTime(), ZoneId.systemDefault()));
-        assertFalse(restaurantAvailability.isOnline());
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
+        assertFalse(restaurantAvailability.isCurrentlyOpen());
     }
 
     @Test
-    public void testIfOfflineDueToAppClosed(){
+    public void testCurrentlyClosedDueToAppClosed(){
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
-        restaurantAvailability.setClock(Clock.fixed(getTodayUnavailableAppTime(), ZoneId.systemDefault()));
-        assertFalse(restaurantAvailability.isOnline());
+        restaurantAvailability.setClock(TestClock.getTodayUnavailableAppTime());
+        assertFalse(restaurantAvailability.isCurrentlyOpen());
     }
 
     @Test
-    public void testIfOnlineWhileAppIsOpen(){
+    public void testIfCurrentlyOpenIfAppIsOpen(){
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
-        restaurantAvailability.setClock(Clock.fixed(getTodayAvailableAppTime(), ZoneId.systemDefault()));
-        assertTrue(restaurantAvailability.isOnline());
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
+        assertTrue(restaurantAvailability.isCurrentlyOpen());
     }
 
-    private Instant getTodayAvailableAppTime(){
-        int year = LocalDateTime.now().getYear();
-        int month = LocalDateTime.now().getMonthValue();
-        int day = LocalDateTime.now().getDayOfMonth();
-        return LocalDateTime.of(year, month, day, 10,1).toInstant(BRAZIL_ZONEOFFSET);
+    @Test
+    public void testIfOpenAtWorkTime(){
+        RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
+        assertFalse(restaurantAvailability.isAppUnavailable(LocalDateTime.now(TestClock.getTodayAvailableAppTime())));
     }
 
-
-    private Instant getTodayUnavailableAppTime(){
-        int year = LocalDateTime.now().getYear();
-        int month = LocalDateTime.now().getMonthValue();
-        int day = LocalDateTime.now().getDayOfMonth();
-        return LocalDateTime.of(year, month, day, 9,1).toInstant(BRAZIL_ZONEOFFSET);
+    @Test
+    public void testIfClosedOutWorkTime(){
+        RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
+        assertTrue(restaurantAvailability.isAppUnavailable(
+                LocalDateTime.now(TestClock.getTodayUnavailableAppTime())
+        ));
     }
+
 }

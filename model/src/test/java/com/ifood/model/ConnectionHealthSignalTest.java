@@ -1,5 +1,6 @@
 package com.ifood.model;
 
+import com.ifood.domain.ConnectionHealthSignal;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

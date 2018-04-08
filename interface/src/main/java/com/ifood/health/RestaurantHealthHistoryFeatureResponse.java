@@ -1,6 +1,6 @@
 package com.ifood.health;
 
-import com.ifood.model.ConnectionHealthHistory;
+import com.ifood.domain.ConnectionHealthSignal;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ public class RestaurantHealthHistoryFeatureResponse {
 
     private String code;
 
-    private List<ConnectionHealthHistory> connections;
+    private List<ConnectionHealthSignal> connections;
 
-    public RestaurantHealthHistoryFeatureResponse(String code, List<ConnectionHealthHistory> connectionHealthHistories) {
+    public RestaurantHealthHistoryFeatureResponse(String code, List<ConnectionHealthSignal> connectionHealthHistories) {
         this.code = code;
         this.connections = connectionHealthHistories;
     }
@@ -19,7 +19,7 @@ public class RestaurantHealthHistoryFeatureResponse {
         return code;
     }
 
-    public List<ConnectionHealthHistory> getConnections() {
+    public List<ConnectionHealthSignal> getConnections() {
         return connections;
     }
 }

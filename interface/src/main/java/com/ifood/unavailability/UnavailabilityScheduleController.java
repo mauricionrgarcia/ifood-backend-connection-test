@@ -1,7 +1,7 @@
-package com.ifood.repository;
+package com.ifood.unavailability;
 
 import com.ifood.DateFormatter;
-import com.ifood.model.UnavailabilitySchedule;
+import com.ifood.domain.UnavailabilitySchedule;
 import com.ifood.service.UnavailabilityScheduleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UnavailabilityScheduleController {
     @ApiOperation(value="Insert an repository repository.")
     @RequestMapping(value="/connection/schedule/unavailability", method = RequestMethod.POST)
     public ResponseEntity insertUnavailabilitySchedule(
-            @RequestBody com.ifood.repository.UnavailabilityScheduleInsertFeatureRequest unavailabilityScheduleFeature){
+            @RequestBody UnavailabilityScheduleInsertFeatureRequest unavailabilityScheduleFeature){
 
         String code = unavailabilityScheduleService.insertSchedule( //
                 unavailabilityScheduleFeature.getRestaurantCode(), //

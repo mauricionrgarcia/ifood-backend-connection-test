@@ -2,12 +2,12 @@ package com.ifood.entity;
 
 import java.time.LocalDateTime;
 
-public class ConnectionHistoryEntity {
+public class ConnectionHealthSignalEntity {
 
     private String code;
     private LocalDateTime receivedAt;
 
-    public ConnectionHistoryEntity(String code, LocalDateTime receivedAt) {
+    public ConnectionHealthSignalEntity(String code, LocalDateTime receivedAt) {
         this.code = code;
         this.receivedAt = receivedAt;
     }

@@ -1,6 +1,6 @@
 package com.ifood;
 
-import com.ifood.model.UnavailabilityReason;
+import com.ifood.domain.UnavailabilityReason;
 import com.jayway.restassured.http.ContentType;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class UnavailabilitySchedulingFeatureTest {
             assertTrue(true);
             return;
         }
-        assertTrue(false);
+        throw new IllegalStateException();
     }
 
     private void deleteUnavailability(String scheduleCode) {

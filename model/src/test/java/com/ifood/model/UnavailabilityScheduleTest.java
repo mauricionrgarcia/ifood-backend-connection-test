@@ -1,6 +1,7 @@
 package com.ifood.model;
 
-import com.ifood.entity.UnavailabilityScheduleEntity;
+import com.ifood.domain.UnavailabilityReason;
+import com.ifood.domain.UnavailabilitySchedule;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

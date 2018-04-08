@@ -1,4 +1,4 @@
-package com.ifood.model;
+package com.ifood.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

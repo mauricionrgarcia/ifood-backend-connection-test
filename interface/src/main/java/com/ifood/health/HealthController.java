@@ -1,7 +1,7 @@
 package com.ifood.health;
 
 import com.ifood.DateFormatter;
-import com.ifood.model.ConnectionHealthHistory;
+import com.ifood.domain.ConnectionHealthSignal;
 import com.ifood.service.HealthService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class HealthController {
 
         List<RestaurantHealthHistoryFeatureResponse> restaurantHealthHistories = restaurantHealthHistoriesListRequest.getRestaurantCodes().stream() //
                 .map(restaurantCode -> {
-                    List<ConnectionHealthHistory> connectionHealthHistories = healthService.findHealthHistory(restaurantCode, restaurantHealthHistoriesListRequest.getStartDate(), restaurantHealthHistoriesListRequest.getEndDate());
+                    List<ConnectionHealthSignal> connectionHealthHistories = healthService.findHealthHistory(restaurantCode, restaurantHealthHistoriesListRequest.getStartDate(), restaurantHealthHistoriesListRequest.getEndDate());
                     if (connectionHealthHistories != null && !connectionHealthHistories.isEmpty()) {
                         return new RestaurantHealthHistoryFeatureResponse(restaurantCode, connectionHealthHistories);
                     }
