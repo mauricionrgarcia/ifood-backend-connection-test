@@ -16,7 +16,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @RequestMapping(value="/connection/report/{restaurant_code}", method = RequestMethod.GET)
+    @RequestMapping(value="/connection/report/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
     public ResponseEntity fetchReport(
             @PathVariable("restaurant_code") String restaurantCode,
             @PathVariable("start_date") String startDate,
@@ -26,6 +26,7 @@ public class ReportController {
                 new DateFormatter().format(startDate),
                 new DateFormatter().format(endDate)
         );
+
         return ResponseEntity.ok(report);
     }
 }
