@@ -1,11 +1,8 @@
 package com.ifood;
 
-import org.hamcrest.collection.IsArray;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.GreaterOrEqual;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cglib.core.Local;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
