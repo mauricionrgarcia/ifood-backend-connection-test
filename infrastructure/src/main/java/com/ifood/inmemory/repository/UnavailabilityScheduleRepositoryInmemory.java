@@ -1,6 +1,7 @@
-package com.ifood.repository;
+package com.ifood.inmemory.repository;
 
 import com.ifood.entity.UnavailabilityScheduleEntity;
+import com.ifood.repository.UnavailabilityScheduleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

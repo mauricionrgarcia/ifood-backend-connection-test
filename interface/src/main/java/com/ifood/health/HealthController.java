@@ -2,6 +2,7 @@ package com.ifood.health;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionHealthSignal;
+import com.ifood.service.ConnectionHealth;
 import com.ifood.service.HealthService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class HealthController {
             @PathVariable("start_date") String startDate,
             @PathVariable("end_date") String endDate){
         return ResponseEntity.ok(healthService.findHealthHistory(restaurantCode, new DateFormatter().format(startDate), new DateFormatter().format(endDate)));
+    }
+
+
+    @ApiOperation(value="Inform if the restaurants in the given list are online or not")
+    @RequestMapping(value = "/connection/health/online/list", method = RequestMethod.POST)
+    public ResponseEntity checkIfOnline(@RequestBody List<String> restaurantCodes){
+        List<ConnectionHealth> connectionHealths = healthService.checkRestaurantsConnection(restaurantCodes);
+        return ResponseEntity.ok(connectionHealths);
     }
 
     @ApiOperation(value="Search by the restaurants health for a given pediod.")

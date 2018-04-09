@@ -1,6 +1,8 @@
-package com.ifood.repository;
+package com.ifood.inmemory.repository;
 
 import com.ifood.entity.ConnectionHealthSignalEntity;
+import com.ifood.entity.CurrentHealthEntity;
+import com.ifood.repository.HealthRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -28,18 +30,4 @@ public class HealthRepositoryInmemory implements HealthRepository {
                 ).collect(Collectors.toList());
     }
 
-    @Override
-    public List<ConnectionHealthSignalEntity> findHealthHistory(List<String> restaurantCodes, LocalDateTime startDate, LocalDateTime endDate) {
-        final List<ConnectionHealthSignalEntity> connectionHistoryEntities = new ArrayList<>();
-        restaurantCodes.forEach(restaurantCode -> {
-            ConnectionHealthSignalEntity connectionHealthSignalEntity = connectionHistories.stream()
-                    .filter(internalConnectionHealthSignalEntity ->
-                            internalConnectionHealthSignalEntity.getCode().equals(restaurantCode)
-                                    && internalConnectionHealthSignalEntity.getReceivedAt().isBefore(endDate)
-                                    && internalConnectionHealthSignalEntity.getReceivedAt().isAfter(startDate)
-                    ).findAny().get();
-            connectionHistoryEntities.add(connectionHealthSignalEntity);
-        });
-        return connectionHistoryEntities;
-    }
 }

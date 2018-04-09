@@ -1,6 +1,7 @@
-package com.ifood.repository;
+package com.ifood.inmemory.repository;
 
 import com.ifood.entity.RestaurantEntity;
+import com.ifood.repository.RestaurantRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
