@@ -1,4 +1,4 @@
-package com.ifood.service;
+package com.ifood.service.unavailability.schedule;
 
 import com.ifood.entity.RestaurantEntity;
 import com.ifood.entity.UnavailabilityScheduleEntity;

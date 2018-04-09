@@ -2,8 +2,8 @@ package com.ifood.health;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionHealthSignal;
-import com.ifood.service.ConnectionHealth;
-import com.ifood.service.HealthService;
+import com.ifood.service.health.ConnectionHealth;
+import com.ifood.service.health.HealthService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

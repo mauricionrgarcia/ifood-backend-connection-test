@@ -1,4 +1,4 @@
-package com.ifood.service;
+package com.ifood.service.unavailability.schedule;
 
 import com.ifood.domain.UnavailabilityReason;
 import com.ifood.domain.UnavailabilitySchedule;

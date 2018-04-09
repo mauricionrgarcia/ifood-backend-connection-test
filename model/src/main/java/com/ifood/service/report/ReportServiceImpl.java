@@ -1,6 +1,8 @@
-package com.ifood.service;
+package com.ifood.service.report;
 
 import com.ifood.domain.*;
+import com.ifood.service.unavailability.schedule.UnavailabilityScheduleService;
+import com.ifood.service.health.HealthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

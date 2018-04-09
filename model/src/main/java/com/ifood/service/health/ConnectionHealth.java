@@ -1,7 +1,6 @@
-package com.ifood.service;
+package com.ifood.service.health;
 
 import com.ifood.domain.RestaurantAvailability;
-import com.ifood.entity.CurrentHealthEntity;
 
 public class ConnectionHealth {
 
@@ -9,7 +8,7 @@ public class ConnectionHealth {
     private boolean currentHealth;
     private RestaurantAvailability restaurantAvailability;
 
-    public ConnectionHealth(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
+    ConnectionHealth(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
         this.restaurantCode = restaurantCode;
         this.currentHealth = currentHealth;
         this.restaurantAvailability = restaurantAvailability;

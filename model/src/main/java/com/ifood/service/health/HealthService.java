@@ -1,7 +1,6 @@
-package com.ifood.service;
+package com.ifood.service.health;
 
 import com.ifood.domain.ConnectionHealthSignal;
-import com.ifood.domain.RestaurantAvailability;
 
 import java.time.LocalDateTime;
 import java.util.List;

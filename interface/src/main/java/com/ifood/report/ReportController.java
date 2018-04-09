@@ -2,7 +2,7 @@ package com.ifood.report;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionReport;
-import com.ifood.service.ReportService;
+import com.ifood.service.report.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

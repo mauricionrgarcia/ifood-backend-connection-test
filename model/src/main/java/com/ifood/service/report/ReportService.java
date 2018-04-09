@@ -1,4 +1,4 @@
-package com.ifood.service;
+package com.ifood.service.report;
 
 import com.ifood.domain.ConnectionReport;
 

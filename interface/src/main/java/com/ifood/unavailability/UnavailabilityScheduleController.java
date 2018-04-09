@@ -2,7 +2,7 @@ package com.ifood.unavailability;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.UnavailabilitySchedule;
-import com.ifood.service.UnavailabilityScheduleService;
+import com.ifood.service.unavailability.schedule.UnavailabilityScheduleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
