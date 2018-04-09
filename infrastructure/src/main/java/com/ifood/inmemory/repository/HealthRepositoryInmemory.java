@@ -1,7 +1,6 @@
 package com.ifood.inmemory.repository;
 
 import com.ifood.entity.ConnectionHealthSignalEntity;
-import com.ifood.entity.CurrentHealthEntity;
 import com.ifood.repository.HealthRepository;
 import org.springframework.stereotype.Repository;
 

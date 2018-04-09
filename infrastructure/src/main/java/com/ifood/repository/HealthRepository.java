@@ -1,7 +1,6 @@
 package com.ifood.repository;
 
 import com.ifood.entity.ConnectionHealthSignalEntity;
-import com.ifood.entity.CurrentHealthEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
