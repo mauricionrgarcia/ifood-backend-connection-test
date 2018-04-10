@@ -58,9 +58,10 @@ It is separated in the modules: interface, model and infrastructure.
 The model block is divided in two parts: domain and services.
 
 ## Project tests
-Into the interface module there are acceptance tests which are end-to-end tests.
-Into the domain module there are unit tests which tests the bussiness requirements.
-Into the infrastructure actually there are no tests **TODO: Need to be implemented integration tests**
+The modules are tested by the test type which suits it the most
+ - Into the interface module there are acceptance tests which are end-to-end tests.
+ - Into the domain module there are unit tests which tests the bussiness requirements.
+ - Into the infrastructure actually there are no tests **TODO: Need to be implemented integration tests**
 
 
 ## Running the application
