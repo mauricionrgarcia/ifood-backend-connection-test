@@ -59,9 +59,9 @@ public class ReporterFeatureTest {
         //TODO: Need to improve it shouldnt be dependent on the time
         LocalDateTime localDateTime = LocalDateTime.now();
         if(localDateTime.getHour() < 9 || localDateTime.getHour() == 23) {
-            response.body("connectionsSucceceded.size()", equalTo(0));
+            response.body("connectionSucceceded.size()", equalTo(0));
         } else {
-            response.body("connectionsSucceceded.size()", greaterThan(0));
+            response.body("connectionSucceceded.size()", greaterThan(0));
         }
     }
 

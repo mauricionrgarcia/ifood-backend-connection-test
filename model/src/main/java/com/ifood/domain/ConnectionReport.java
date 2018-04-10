@@ -1,64 +1,128 @@
 package com.ifood.domain;
 
+import org.apache.ignite.Ignite;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.ifood.domain.ConnectionPeriodAssessed.ConnectionDefinition.*;
 
 /**
  * Prepare the connection reports showing the scheduled and unscheduled issues.
  *
- *
- * //TODO: This class need to be improved to be more precise in issues related to when some event stop and the other starts
+ * //FIXME This class is messy.
  */
 public class ConnectionReport {
 
-    private List<ConnectionPeriodAssessed> connectionsSucceceded;
+    private List<ConnectionPeriodAssessed> connectionSucceceded;
     private List<ConnectionPeriodAssessed> connectionFailed;
     private List<ConnectionPeriodAssessed> connectionIssuesScheduled;
     private List<ConnectionPeriodAssessed> bussinessIssuesScheduled;
+    private List<ConnectionPeriodAssessed> appClosed;
 
-    public ConnectionReport(RestaurantAvailability restaurantAvailability, RestaurantConnection restaurantConnection){
-        this.connectionsSucceceded = new ArrayList<>();
+    public ConnectionReport() {
+        this.connectionSucceceded = new ArrayList<>();
         this.connectionFailed = new ArrayList<>();
         this.connectionIssuesScheduled = new ArrayList<>();
         this.bussinessIssuesScheduled = new ArrayList<>();
-
-        List<ConnectionPeriodAssessed> connectionsFailed = restaurantConnection.getConnectionsFailed();
-        List<ConnectionPeriodAssessed> connectionsSucceded = restaurantConnection.getConnectionsSucceded();
-
-        connectionsFailed.forEach(connectionPeriodAssessed -> {
-            LocalDateTime firstHealthSignal = connectionPeriodAssessed.getFirstHealthSignal();
-            LocalDateTime scondHealthSignal = connectionPeriodAssessed.getSecondHealthSignal();
-            if (restaurantAvailability.isAppUnavailable(firstHealthSignal) || restaurantAvailability.isAppUnavailable(scondHealthSignal)){
-                return;
-            }
-
-            if(restaurantAvailability.isScheduledUnavailable(firstHealthSignal) || restaurantAvailability.isScheduledUnavailable(scondHealthSignal)){
-                connectionIssuesScheduled.add(connectionPeriodAssessed);
-                return;
-            }
-
-            connectionFailed.add(connectionPeriodAssessed);
-        });
-
-        connectionsSucceded.forEach(connectionPeriodAssessed -> {
-            LocalDateTime firstHealthSignal = connectionPeriodAssessed.getFirstHealthSignal();
-            LocalDateTime scondHealthSignal = connectionPeriodAssessed.getSecondHealthSignal();
-            if (restaurantAvailability.isAppUnavailable(firstHealthSignal) || restaurantAvailability.isAppUnavailable(scondHealthSignal)){
-                return;
-            }
-
-            if(restaurantAvailability.isScheduledUnavailable(firstHealthSignal) || restaurantAvailability.isScheduledUnavailable(scondHealthSignal)){
-                this.bussinessIssuesScheduled.add(connectionPeriodAssessed);
-                return;
-            }
-
-            connectionsSucceceded.add(connectionPeriodAssessed);
-        });
+        this.appClosed = new ArrayList<>();
     }
 
-    public List<ConnectionPeriodAssessed> getConnectionsSucceceded() {
-        return connectionsSucceceded;
+    public ConnectionReport(final RestaurantAvailability restaurantAvailability, final RestaurantConnection restaurantConnection){
+        this();
+        Collection<ConnectionPeriodAssessed> supposedFailed = new ArrayList<>();
+        if(restaurantConnection.getConnectionsFailed() != null && !restaurantConnection.getConnectionsFailed().isEmpty()) {
+            supposedFailed = restaurantConnection.getConnectionsFailed().stream()
+                    .map(connectionPeriodAssessed -> assessFailedConnectionPeriod(restaurantAvailability, connectionPeriodAssessed)).collect(Collectors.toList());
+        }
+
+        Collection<ConnectionPeriodAssessed> supposedSucceded = new ArrayList<>();
+        if(restaurantConnection.getConnectionsSucceded() != null && !restaurantConnection.getConnectionsSucceded().isEmpty()) {
+            supposedSucceded = restaurantConnection.getConnectionsSucceded().stream()
+                    .map(connectionPeriodAssessed -> assessSuccededConnectionPeriod(restaurantAvailability, connectionPeriodAssessed)).collect(Collectors.toList());
+        }
+
+        supposedFailed.forEach(connectionPeriodAssessed -> defineFailedConnectionList(connectionPeriodAssessed));
+        supposedSucceded.forEach(connectionPeriodAssessed -> defineSuccededConnectionList(connectionPeriodAssessed));
+    }
+
+
+    public ConnectionReport(final RestaurantAvailability restaurantAvailability, final RestaurantConnection restaurantConnection, Ignite ignite){
+        this();
+        Collection<ConnectionPeriodAssessed> supposedFailed = new ArrayList<>();
+        if(restaurantConnection.getConnectionsFailed() != null && !restaurantConnection.getConnectionsFailed().isEmpty()) {
+            supposedFailed = ignite.compute().apply(
+                    (ConnectionPeriodAssessed connectionPeriodAssessed) ->
+                            assessFailedConnectionPeriod(restaurantAvailability, connectionPeriodAssessed),
+                            restaurantConnection.getConnectionsFailed()
+            );
+        }
+
+        Collection<ConnectionPeriodAssessed> supposedSucceded = new ArrayList<>();
+        if(restaurantConnection.getConnectionsSucceded() != null && !restaurantConnection.getConnectionsSucceded().isEmpty()) {
+            supposedSucceded = ignite.compute().apply(
+                    (ConnectionPeriodAssessed connectionPeriodAssessed) ->
+                            assessSuccededConnectionPeriod(restaurantAvailability, connectionPeriodAssessed),
+                            restaurantConnection.getConnectionsSucceded()
+            );
+        }
+
+        supposedFailed.forEach(connectionPeriodAssessed -> defineFailedConnectionList(connectionPeriodAssessed));
+        supposedSucceded.forEach(connectionPeriodAssessed -> defineSuccededConnectionList(connectionPeriodAssessed));
+    }
+
+    private ConnectionPeriodAssessed assessSuccededConnectionPeriod(RestaurantAvailability restaurantAvailability, ConnectionPeriodAssessed connectionPeriodAssessed) {
+        LocalDateTime firstHealthSignal = connectionPeriodAssessed.getFirstHealthSignal();
+        LocalDateTime scondHealthSignal = connectionPeriodAssessed.getSecondHealthSignal();
+        if (restaurantAvailability.isAppUnavailable(firstHealthSignal) || restaurantAvailability.isAppUnavailable(scondHealthSignal)) {
+            connectionPeriodAssessed.setConnectionDefinition(ConnectionPeriodAssessed.ConnectionDefinition.APP_CLOSED);
+        } else if (restaurantAvailability.isScheduledUnavailable(firstHealthSignal) || restaurantAvailability.isScheduledUnavailable(scondHealthSignal)) {
+            connectionPeriodAssessed.setConnectionDefinition(SCHEDULED_BUSSINESS_ISSUES);
+        } else {
+            connectionPeriodAssessed.setConnectionDefinition(SUCCEDED);
+        }
+        return connectionPeriodAssessed;
+    }
+
+    private ConnectionPeriodAssessed assessFailedConnectionPeriod(RestaurantAvailability restaurantAvailability, ConnectionPeriodAssessed connectionPeriodAssessed) {
+        LocalDateTime firstHealthSignal = connectionPeriodAssessed.getFirstHealthSignal();
+        LocalDateTime scondHealthSignal = connectionPeriodAssessed.getSecondHealthSignal();
+        if (restaurantAvailability.isAppUnavailable(firstHealthSignal) || restaurantAvailability.isAppUnavailable(scondHealthSignal)) {
+            connectionPeriodAssessed.setConnectionDefinition(ConnectionPeriodAssessed.ConnectionDefinition.APP_CLOSED);
+        } else  if (restaurantAvailability.isScheduledUnavailable(firstHealthSignal) || restaurantAvailability.isScheduledUnavailable(scondHealthSignal)) {
+            connectionPeriodAssessed.setConnectionDefinition(SCHEDULED_CONNECTION_ISSUES);
+        } else {
+            connectionPeriodAssessed.setConnectionDefinition(FAILED);
+        }
+        return connectionPeriodAssessed;
+    }
+
+    private void defineFailedConnectionList(ConnectionPeriodAssessed connectionPeriodAssessed) {
+        if (connectionPeriodAssessed.getConnectionDefinition().equals(SCHEDULED_CONNECTION_ISSUES)){
+            connectionIssuesScheduled.add(connectionPeriodAssessed);
+        } else if(connectionPeriodAssessed.getConnectionDefinition().equals(APP_CLOSED)) {
+            appClosed.add(connectionPeriodAssessed);
+        } else if (connectionPeriodAssessed.getConnectionDefinition().equals(FAILED)){
+            connectionFailed.add(connectionPeriodAssessed);
+        }
+    }
+
+    private void defineSuccededConnectionList(ConnectionPeriodAssessed connectionPeriodAssessed) {
+        if (connectionPeriodAssessed.getConnectionDefinition().equals(SCHEDULED_BUSSINESS_ISSUES)){
+            bussinessIssuesScheduled.add(connectionPeriodAssessed);
+        } else if(connectionPeriodAssessed.getConnectionDefinition().equals(APP_CLOSED)) {
+            appClosed.add(connectionPeriodAssessed);
+        } else if (connectionPeriodAssessed.getConnectionDefinition().equals(SUCCEDED)){
+            connectionSucceceded.add(connectionPeriodAssessed);
+        }
+    }
+
+
+    public List<ConnectionPeriodAssessed> getConnectionSucceceded() {
+        return connectionSucceceded;
     }
 
     public List<ConnectionPeriodAssessed> getConnectionFailed() {
@@ -71,5 +135,9 @@ public class ConnectionReport {
 
     public List<ConnectionPeriodAssessed> getBussinessIssuesScheduled() {
         return bussinessIssuesScheduled;
+    }
+
+    public List<ConnectionPeriodAssessed> getAppClosed() {
+        return appClosed;
     }
 }

@@ -24,9 +24,10 @@ public class ConnectionReportTest {
 
         RestaurantConnection restaurantConnection =new RestaurantConnection(connectionHealthSignals);
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
 
         ConnectionReport connectionReport = new ConnectionReport(restaurantAvailability, restaurantConnection);
-        Assert.assertEquals(4, connectionReport.getConnectionsSucceceded().size());
+        Assert.assertEquals(4, connectionReport.getConnectionSucceceded().size());
         Assert.assertEquals(0, connectionReport.getBussinessIssuesScheduled().size());
         Assert.assertEquals(0, connectionReport.getConnectionIssuesScheduled().size());
         Assert.assertEquals(0, connectionReport.getConnectionFailed().size());
@@ -48,9 +49,10 @@ public class ConnectionReportTest {
 
         RestaurantConnection restaurantConnection = new RestaurantConnection(connectionHealthSignals);
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedules);
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
 
         ConnectionReport connectionReport = new ConnectionReport(restaurantAvailability, restaurantConnection);
-        Assert.assertEquals(1, connectionReport.getConnectionsSucceceded().size());
+        Assert.assertEquals(1, connectionReport.getConnectionSucceceded().size());
         Assert.assertEquals(3, connectionReport.getBussinessIssuesScheduled().size());
         Assert.assertEquals(0, connectionReport.getConnectionIssuesScheduled().size());
         Assert.assertEquals(0, connectionReport.getConnectionFailed().size());
@@ -72,9 +74,10 @@ public class ConnectionReportTest {
 
         RestaurantConnection restaurantConnection = new RestaurantConnection(connectionHealthSignals);
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedules);
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
 
         ConnectionReport connectionReport = new ConnectionReport(restaurantAvailability, restaurantConnection);
-        Assert.assertEquals(0, connectionReport.getConnectionsSucceceded().size());
+        Assert.assertEquals(0, connectionReport.getConnectionSucceceded().size());
         Assert.assertEquals(0, connectionReport.getBussinessIssuesScheduled().size());
         Assert.assertEquals(3, connectionReport.getConnectionIssuesScheduled().size());
         Assert.assertEquals(1, connectionReport.getConnectionFailed().size());
@@ -94,9 +97,11 @@ public class ConnectionReportTest {
 
         RestaurantConnection restaurantConnection =new RestaurantConnection(connectionHealthSignals);
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability();
+        restaurantAvailability.setClock(TestClock.getTodayAvailableAppTime());
+
 
         ConnectionReport connectionReport = new ConnectionReport(restaurantAvailability, restaurantConnection);
-        Assert.assertEquals(0, connectionReport.getConnectionsSucceceded().size());
+        Assert.assertEquals(0, connectionReport.getConnectionSucceceded().size());
         Assert.assertEquals(0, connectionReport.getBussinessIssuesScheduled().size());
         Assert.assertEquals(0, connectionReport.getConnectionIssuesScheduled().size());
         Assert.assertEquals(4, connectionReport.getConnectionFailed().size());

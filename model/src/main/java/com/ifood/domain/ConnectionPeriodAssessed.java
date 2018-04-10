@@ -25,6 +25,8 @@ public class ConnectionPeriodAssessed {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private ConnectionHealthSignal secondHealthSignal;
 
+    private ConnectionDefinition connectionDefinition;
+
     public ConnectionPeriodAssessed(ConnectionHealthSignal firstHealthSignal, ConnectionHealthSignal secondHealthSignal) {
         this.firstHealthSignal = firstHealthSignal;
         this.secondHealthSignal = secondHealthSignal;
@@ -41,5 +43,42 @@ public class ConnectionPeriodAssessed {
 
     public LocalDateTime getSecondHealthSignal() {
         return secondHealthSignal.getReceivedAt();
+    }
+
+    //FIXME This method is not a good solution
+    void setConnectionDefinition(ConnectionDefinition connectionDefinition) {
+        this.connectionDefinition = connectionDefinition;
+    }
+
+    @JsonIgnore
+    ConnectionDefinition getConnectionDefinition() {
+        return connectionDefinition;
+    }
+
+    public enum ConnectionDefinition {
+        /**
+         * Connection signal was received succesfully
+         */
+        SUCCEDED,
+
+        /**
+         * Have not received the connection signal
+         */
+        FAILED,
+
+        /**
+         * Connection issue scheduled.
+         */
+        SCHEDULED_CONNECTION_ISSUES,
+
+        /**
+         * Bussiness issue schedules.
+         */
+        SCHEDULED_BUSSINESS_ISSUES,
+
+        /**
+         * App closed.
+         */
+        APP_CLOSED;
     }
 }

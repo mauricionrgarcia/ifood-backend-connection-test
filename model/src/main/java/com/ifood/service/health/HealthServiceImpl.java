@@ -31,7 +31,6 @@ public class HealthServiceImpl implements HealthService {
     @Autowired
     private UnavailabilityScheduleRepository unavailabilityScheduleRepository;
 
-
     @Override
     public void receiveHealthSignal(String restaurantCode) {
         healthRepository.insertSignalRegistry(new ConnectionHealthSignalEntity(restaurantCode, LocalDateTime.now()));
