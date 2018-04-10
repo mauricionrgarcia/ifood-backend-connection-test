@@ -3,6 +3,7 @@ package com.ifood.report;
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionReport;
 import com.ifood.service.report.ReportService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,9 @@ public class ReportController {
 
     @RequestMapping(value="/connection/report/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
     public ResponseEntity fetchReport(
-            @PathVariable("restaurant_code") String restaurantCode,
-            @PathVariable("start_date") String startDate,
-            @PathVariable("end_date") String endDate) {
+            @ApiParam("Restaurant unique code") @PathVariable("restaurant_code") String restaurantCode,
+            @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)") @PathVariable("start_date") String startDate,
+            @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)") @PathVariable("end_date") String endDate) {
         ConnectionReport report = reportService.fetchReport(
                 restaurantCode,
                 new DateFormatter().format(startDate),

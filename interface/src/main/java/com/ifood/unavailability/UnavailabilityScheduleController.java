@@ -4,6 +4,7 @@ import com.ifood.DateFormatter;
 import com.ifood.domain.UnavailabilitySchedule;
 import com.ifood.service.unavailability.schedule.UnavailabilityScheduleService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,9 @@ public class UnavailabilityScheduleController {
     @ApiOperation(value="Fetch the repository repository for a given period.")
     @RequestMapping(value="/connection/schedule/unavailability/{restaurant_code}/{start_date}/{end_date}", method = RequestMethod.GET)
     public ResponseEntity fetchUnavailabilitySchedule(
-            @PathVariable("restaurant_code") String restaurantCode, //
-            @PathVariable("start_date") String startDate,
-            @PathVariable("end_date") String endDate) {
+            @ApiParam("Restaurant unique code") @PathVariable("restaurant_code") String restaurantCode, //
+            @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)") @PathVariable("start_date") String startDate,
+            @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)") @PathVariable("end_date") String endDate) {
         List<UnavailabilitySchedule> unavailabilitySchedule =
                 unavailabilityScheduleService.fetchUnavailabilitySchedule(restaurantCode,
                         new DateFormatter().format(startDate),
@@ -45,7 +46,7 @@ public class UnavailabilityScheduleController {
 
     @ApiOperation(value="Delete an repository schedule.")
     @RequestMapping(value="/connection/schedule/unavailability/{schedule_code}", method = RequestMethod.POST)
-    public ResponseEntity deleteUnavailabilitySchedule(@PathVariable("schedule_code") String scheduleId){
+    public ResponseEntity deleteUnavailabilitySchedule(@ApiParam("Schedule unique code")  @PathVariable("schedule_code") String scheduleId){
 
         unavailabilityScheduleService.deleteSchedule(scheduleId);
 

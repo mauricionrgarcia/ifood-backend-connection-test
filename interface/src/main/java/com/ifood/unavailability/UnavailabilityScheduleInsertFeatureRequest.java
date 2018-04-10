@@ -2,15 +2,19 @@ package com.ifood.unavailability;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.UnavailabilityReason;
+import io.swagger.annotations.ApiParam;
 
 import java.time.LocalDateTime;
 
 public class UnavailabilityScheduleInsertFeatureRequest {
 
+    @ApiParam("Restaurant unique code")
     private String restaurantCode;
 
+    @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)")
     private String scheduleStart;
 
+    @ApiParam("(Format: yyyy-MM-dd'T'HH:mm)")
     private String scheduleEnd;
 
     private UnavailabilityReason unavailabilityReason;
