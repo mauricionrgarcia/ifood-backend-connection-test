@@ -12,8 +12,6 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class MqttConfiguration {
 
-    private String restaurantHealthSignalTopic;
-
     @Bean
     public MessageChannel mqttInputChannel() {
         return new DirectChannel();
@@ -22,7 +20,7 @@ public class MqttConfiguration {
     @Bean
     public MessageProducer inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter =  new MqttPahoMessageDrivenChannelAdapter(
-                "tcp://localhost:1883", //
+                "tcp://localhost:1883", //FIXME Need to be externalized, following the 12-factor rule
                 MqttClient.generateClientId(), //
                 MqttTopics.RESTAURANT_HEALTH_SIGNAL_TOPIC);
         adapter.setCompletionTimeout(5000);

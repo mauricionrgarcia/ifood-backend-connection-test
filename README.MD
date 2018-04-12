@@ -70,9 +70,11 @@ To run the application just type in the root of the project folder
 ./gradlew bootRun
 ```
 
-## Application endpoints
+## Application Rest endpoints
 The application endpoints can be viewed at /swagger-ui.html.
 
+## Application MQTT endpoint
+The MQTT endpoint is available at http://localhost:1883 with the topic "restaurantHealthSignalTopic"
 
 ## Test data
 There are some restaurants` codes that can be used to test the application:

@@ -13,14 +13,14 @@ public class HealthControllerMqtt {
     @Autowired
     private HealthService healthService;
 
+    /**
+     * Receive the signal sent by the restaurant.
+     * @return
+     */
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler() {
-        return message -> {
-            healthService.receiveHealthSignal(message.getPayload().toString());
-            System.out.println(message.getPayload());
-        };
+        return message -> healthService.receiveHealthSignal(message.getPayload().toString());
     }
-
 
 }
