@@ -1,4 +1,4 @@
-package com.ifood.health;
+package com.ifood.rest.health;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionHealthSignal;

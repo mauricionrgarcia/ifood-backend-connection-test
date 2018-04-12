@@ -1,4 +1,4 @@
-package com.ifood.unavailability;
+package com.ifood.rest.unavailability;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.UnavailabilityReason;

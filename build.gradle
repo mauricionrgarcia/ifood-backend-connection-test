@@ -95,16 +95,22 @@ project(":interface"){
 
     dependencies {
         compile group:'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+        compile group:'org.springframework.boot', name: 'spring-boot-starter-integration', version: springBootVersion
+        compile group:'org.springframework.integration', name: 'spring-integration-mqtt', version: '5.0.3.RELEASE'
+        compile group:'org.springframework.integration', name: 'spring-integration-stream', version: '5.0.3.RELEASE'
+
         compile group:'io.springfox', name: 'springfox-swagger2', version: springfoxSwagger
         compile group:'io.springfox', name: 'springfox-swagger-ui', version: springfoxSwagger
+
         compile group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.1.0'
-        compile project(":model")
 
         compile group: 'org.apache.ignite', name: 'ignite-core', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-spring', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-spring-data', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-indexing', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-slf4j', version: apacheIgnite
+
+        compile project(":model")
 
         testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
         testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'

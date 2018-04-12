@@ -33,7 +33,6 @@ public class ReportServiceImpl implements ReportService {
         RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedule);
 
         return new ConnectionReport(restaurantAvailability, restaurantConnection, ignite );
-
     }
 
 }

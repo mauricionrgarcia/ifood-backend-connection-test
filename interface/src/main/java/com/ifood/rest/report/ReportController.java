@@ -1,4 +1,4 @@
-package com.ifood.report;
+package com.ifood.rest.report;
 
 import com.ifood.DateFormatter;
 import com.ifood.domain.ConnectionReport;

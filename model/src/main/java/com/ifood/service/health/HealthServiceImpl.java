@@ -1,13 +1,14 @@
 package com.ifood.service.health;
 
+import com.ifood.database.entity.RestaurantEntity;
 import com.ifood.domain.ConnectionHealthSignal;
 import com.ifood.domain.RestaurantAvailability;
 import com.ifood.domain.UnavailabilitySchedule;
-import com.ifood.entity.ConnectionHealthSignalEntity;
+import com.ifood.database.entity.ConnectionHealthSignalEntity;
 import com.ifood.ignite.repository.HealthRepositoryIgnite;
-import com.ifood.repository.HealthRepository;
-import com.ifood.repository.RestaurantRepository;
-import com.ifood.repository.UnavailabilityScheduleRepository;
+import com.ifood.database.repository.HealthRepository;
+import com.ifood.database.repository.RestaurantRepository;
+import com.ifood.database.repository.UnavailabilityScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,10 @@ public class HealthServiceImpl implements HealthService {
 
     @Override
     public void receiveHealthSignal(String restaurantCode) {
+        boolean notExists = !restaurantRepository.exists(restaurantCode);
+        if(notExists)
+            throw new IllegalArgumentException("Invalid restaurant code");
+
         healthRepository.insertSignalRegistry(new ConnectionHealthSignalEntity(restaurantCode, LocalDateTime.now()));
 
         healthRepositoryIgnite.save(restaurantCode, Boolean.TRUE);

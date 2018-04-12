@@ -7,7 +7,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.text.SimpleDateFormat;
 
 @Configuration
-public class WebConfiguration   {
+public class WebConfiguration {
+
     @Bean
     public Jackson2ObjectMapperBuilder jacksonBuilder() {
         Jackson2ObjectMapperBuilder b = new Jackson2ObjectMapperBuilder();

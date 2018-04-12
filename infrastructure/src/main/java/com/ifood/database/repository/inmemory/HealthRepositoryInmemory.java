@@ -1,7 +1,7 @@
-package com.ifood.inmemory.repository;
+package com.ifood.database.repository.inmemory;
 
-import com.ifood.entity.ConnectionHealthSignalEntity;
-import com.ifood.repository.HealthRepository;
+import com.ifood.database.entity.ConnectionHealthSignalEntity;
+import com.ifood.database.repository.HealthRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

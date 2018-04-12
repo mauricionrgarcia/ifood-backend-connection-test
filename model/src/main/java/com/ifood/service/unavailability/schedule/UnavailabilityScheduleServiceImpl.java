@@ -1,11 +1,11 @@
 package com.ifood.service.unavailability.schedule;
 
-import com.ifood.entity.RestaurantEntity;
-import com.ifood.entity.UnavailabilityScheduleEntity;
+import com.ifood.database.entity.RestaurantEntity;
+import com.ifood.database.entity.UnavailabilityScheduleEntity;
+import com.ifood.database.repository.RestaurantRepository;
+import com.ifood.database.repository.UnavailabilityScheduleRepository;
 import com.ifood.domain.UnavailabilityReason;
 import com.ifood.domain.UnavailabilitySchedule;
-import com.ifood.repository.RestaurantRepository;
-import com.ifood.repository.UnavailabilityScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +46,11 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
 
     @Override
     public List<UnavailabilitySchedule> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
+        boolean notExists = !restaurantRepository.exists(restaurantCode);
+        if(notExists){
+            throw new IllegalArgumentException("Restaurant not found.");
+        }
+
         return unavailabilityScheduleRepository.fetchUnavailabilitySchedule(restaurantCode, startDate, endDate) //
                 .stream().map(UnavailabilitySchedule::new).collect(Collectors.toList());
     }

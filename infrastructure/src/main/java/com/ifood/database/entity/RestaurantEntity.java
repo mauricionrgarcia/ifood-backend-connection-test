@@ -1,4 +1,4 @@
-package com.ifood.entity;
+package com.ifood.database.entity;
 
 public class RestaurantEntity {
 

@@ -1,7 +1,7 @@
-package com.ifood.inmemory.repository;
+package com.ifood.database.repository.inmemory;
 
-import com.ifood.entity.RestaurantEntity;
-import com.ifood.repository.RestaurantRepository;
+import com.ifood.database.entity.RestaurantEntity;
+import com.ifood.database.repository.RestaurantRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +23,11 @@ public class RestaurantRepositoryInmemory implements RestaurantRepository {
                         restaurantEntity.getCode().equals(restaurantCode) //
                 ) //
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("Restaurant not found."));
+    }
+
+    @Override
+    public boolean exists(String restaurantCode) {
+        return findRestaurant(restaurantCode) != null;
     }
 
 }

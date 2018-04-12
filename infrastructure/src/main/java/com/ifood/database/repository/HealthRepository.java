@@ -1,6 +1,6 @@
-package com.ifood.repository;
+package com.ifood.database.repository;
 
-import com.ifood.entity.ConnectionHealthSignalEntity;
+import com.ifood.database.entity.ConnectionHealthSignalEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
