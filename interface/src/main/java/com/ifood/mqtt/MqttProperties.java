@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MqttProperties {
 
-    @Value("ifood.mqtt.health.host")
+    @Value("${ifood.mqtt.health.host}")
     private String mqttHealthHost;
 
-    @Value("ifood.mqtt.health.port")
+    @Value("${ifood.mqtt.health.port}")
     private String mqttHealthPort;
 
     public String getMqttHealthEndpoint() {
