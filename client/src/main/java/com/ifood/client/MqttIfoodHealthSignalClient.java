@@ -4,15 +4,25 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.Scanner;
+
 public class MqttIfoodHealthSignalClient {
 
     public static void main(String[] args) throws MqttException {
+        while(true) {
+            System.out.print("Insert the restaurant code: ");
+            String restaurantCode = new Scanner(System.in).next();
 
-        MqttClient client = new MqttClient ("tcp://localhost:1883", MqttClient.generateClientId());
+            sendHealthSignal(restaurantCode);
+        }
+    }
+
+    private static void sendHealthSignal(String restaurantCode) throws MqttException {
+        MqttClient client = new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
         client.connect();
         MqttMessage message = new MqttMessage();
-        message.setPayload("restaurant1".getBytes());
-        client.publish("topic1", message);
+        message.setPayload(restaurantCode.getBytes());
+        client.publish("restaurantHealthSignalTopic", message);
         client.disconnect();
     }
 }
