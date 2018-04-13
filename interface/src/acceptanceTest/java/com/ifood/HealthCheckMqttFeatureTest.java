@@ -22,7 +22,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 @Ignore("Travis is throwing an unknown error while trying to connect.")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class HealthCheckerMqttFeatureTest {
+public class HealthCheckMqttFeatureTest {
 
     @Test
     public void shouldAcceptHealthSignalAndRegister() throws MqttException {

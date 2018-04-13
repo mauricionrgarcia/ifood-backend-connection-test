@@ -16,7 +16,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class HealthCheckerRestFeatureTest {
+public class HealthCheckRestFeatureTest {
 
     @Test
     public void shouldAcceptHealthSignalAndRegister(){
