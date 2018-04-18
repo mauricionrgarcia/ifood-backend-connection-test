@@ -5,10 +5,10 @@ import com.ifood.domain.RestaurantAvailability;
 public class ConnectionHealth {
 
     private String restaurantCode;
-    private boolean currentHealth;
+    private Boolean currentHealth;
     private RestaurantAvailability restaurantAvailability;
 
-    ConnectionHealth(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
+    ConnectionHealth(String restaurantCode, Boolean currentHealth, RestaurantAvailability restaurantAvailability) {
         this.restaurantCode = restaurantCode;
         this.currentHealth = currentHealth;
         this.restaurantAvailability = restaurantAvailability;
@@ -19,8 +19,13 @@ public class ConnectionHealth {
     }
 
     public boolean isOnline(){
-        if (!restaurantAvailability.isCurrentlyOpen())
+        if (!restaurantAvailability.isCurrentlyOpen()) {
             return false;
+        }
+
+        if(currentHealth == null){
+            return false;
+        }
 
         return currentHealth;
     }

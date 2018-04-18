@@ -24,7 +24,7 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
 
     @Override
     public String insertSchedule(String restaurantCode, UnavailabilityReason reason, LocalDateTime startDate, LocalDateTime endDate) {
-        RestaurantEntity restaurant = restaurantRepository.findRestaurant(restaurantCode);
+        RestaurantEntity restaurant = restaurantRepository.findByCode(restaurantCode);
         if(restaurant == null){
             throw new IllegalArgumentException("Restaurant not found.");
         }
@@ -39,7 +39,7 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
         }
 
         UnavailabilityScheduleEntity unavailabilityScheduleEntity = new UnavailabilityScheduleEntity(restaurant, reason.name(), startDate, endDate);
-        unavailabilityScheduleRepository.saveUnavailabilitySchedule(unavailabilityScheduleEntity);
+        unavailabilityScheduleRepository.save(unavailabilityScheduleEntity);
 
         return unavailabilityScheduleEntity.getCode();
     }
@@ -56,7 +56,7 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
     }
 
     @Override
-    public void deleteSchedule(String scheduleId) {
-        unavailabilityScheduleRepository.deleteSchedule(scheduleId);
+    public void deleteSchedule(String scheduleCode) {
+        unavailabilityScheduleRepository.deleteByCode(scheduleCode);
     }
 }

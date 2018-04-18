@@ -1,21 +1,25 @@
 package com.ifood.service.health;
 
-import com.ifood.database.entity.RestaurantEntity;
-import com.ifood.domain.ConnectionHealthSignal;
-import com.ifood.domain.RestaurantAvailability;
-import com.ifood.domain.UnavailabilitySchedule;
 import com.ifood.database.entity.ConnectionHealthSignalEntity;
-import com.ifood.ignite.repository.HealthRepositoryIgnite;
+import com.ifood.database.entity.RestaurantEntity;
 import com.ifood.database.repository.HealthRepository;
 import com.ifood.database.repository.RestaurantRepository;
 import com.ifood.database.repository.UnavailabilityScheduleRepository;
+import com.ifood.domain.ConnectionHealthSignal;
+import com.ifood.domain.RestaurantAvailability;
+import com.ifood.domain.UnavailabilitySchedule;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.ifood.ignite.ApacheIgniteConfiguration.RESTAURANT_HEALTH_SIGNAL_CACHE;
 
 @Service
 public class HealthServiceImpl implements HealthService {
@@ -24,7 +28,7 @@ public class HealthServiceImpl implements HealthService {
     private HealthRepository healthRepository;
 
     @Autowired
-    private HealthRepositoryIgnite healthRepositoryIgnite;
+    private Ignite healthRepositoryIgnite;
 
     @Autowired
     private RestaurantRepository restaurantRepository;
@@ -38,9 +42,11 @@ public class HealthServiceImpl implements HealthService {
         if(notExists)
             throw new IllegalArgumentException("Invalid restaurant code");
 
-        healthRepository.insertSignalRegistry(new ConnectionHealthSignalEntity(restaurantCode, LocalDateTime.now()));
+        RestaurantEntity restaurant = restaurantRepository.findByCode(restaurantCode);
+        healthRepository.save(new ConnectionHealthSignalEntity(restaurant, LocalDateTime.now()));
 
-        healthRepositoryIgnite.save(restaurantCode, Boolean.TRUE);
+        IgniteCache<String, Boolean> entries = healthRepositoryIgnite.getOrCreateCache(RESTAURANT_HEALTH_SIGNAL_CACHE);
+        entries.put(restaurantCode, Boolean.TRUE);
     }
 
     @Override
@@ -60,7 +66,8 @@ public class HealthServiceImpl implements HealthService {
                     unavailabilityScheduleRepository.fetchUnavailabilitySchedule(restaurantCode, currentTime, maxTimeOfUnavailability)
                             .stream().map(UnavailabilitySchedule::new).collect(Collectors.toList());
 
-            boolean currentHealth = healthRepositoryIgnite.exists(restaurantCode);
+            IgniteCache<String, Boolean> entries = healthRepositoryIgnite.getOrCreateCache(RESTAURANT_HEALTH_SIGNAL_CACHE);
+            Boolean currentHealth = entries.get(restaurantCode);
             RestaurantAvailability restaurantAvailability = new RestaurantAvailability(unavailabilitySchedules);
 
             ConnectionHealth connectionHealth = new ConnectionHealth(restaurantCode, currentHealth, restaurantAvailability);
@@ -69,6 +76,14 @@ public class HealthServiceImpl implements HealthService {
 
 
         return connectionHealths;
+    }
+
+    @PostConstruct
+    public void postConstruct(){
+        restaurantRepository.save(new RestaurantEntity("restaurant1"));
+        restaurantRepository.save(new RestaurantEntity("restaurant2"));
+        restaurantRepository.save(new RestaurantEntity("restaurant3"));
+        restaurantRepository.save(new RestaurantEntity("restaurant4"));
     }
 
 }

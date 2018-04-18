@@ -53,6 +53,16 @@ subprojects {
         }
     }
 
+    tasks.withType(AbstractCompile) {
+        //Added due to the java9 modules needs
+        options.compilerArgs += ["--add-modules", "java.xml.ws.annotation"]
+    }
+
+    tasks.withType(Test) {
+        //Added due to the java9 modules needs
+        jvmArgs += ["--add-modules", "java.xml.ws.annotation"]
+    }
+
     task acceptanceTest(type: Test) {
         setTestClassesDirs(sourceSets.acceptanceTest.output.getClassesDirs())
         classpath = sourceSets.acceptanceTest.runtimeClasspath
@@ -76,25 +86,27 @@ project(":interface"){
 
 
     bootRun {
-        doFirst { //Added due to the java9 modules needs (It is necessary because ApacheIgnite)
+        doFirst { //Added due to the java9 modules needs
             jvmArgs= [
                      '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED'
                     , '--add-exports', 'java.base/sun.nio.ch=ALL-UNNAMED'
                     , '--add-exports', 'java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED'
                     , '--add-exports', 'jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED'
                     , '--add-modules', 'java.xml.bind'
+                    , '--add-modules', 'java.xml.ws.annotation'
             ]
         }
     }
 
     acceptanceTest {
-        doFirst { //Added due to the java9 modules needs (It is necessary because ApacheIgnite)
+        doFirst { //Added due to the java9 modules needs
             jvmArgs= [
                     '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED'
                     , '--add-exports', 'java.base/sun.nio.ch=ALL-UNNAMED'
                     , '--add-exports', 'java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED'
                     , '--add-exports', 'jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED'
                     , '--add-modules', 'java.xml.bind'
+                    , '--add-modules', 'java.xml.ws.annotation'
                 ]
             }
     }
@@ -138,10 +150,11 @@ project(":infrastructure"){
     dependencies {
         compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: springBootVersion
         compile group: 'org.apache.ignite', name: 'ignite-core', version: apacheIgnite
-        compile group: 'org.apache.ignite', name: 'ignite-spring', version: apacheIgnite
-        compile group: 'org.apache.ignite', name: 'ignite-spring-data', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-indexing', version: apacheIgnite
         compile group: 'org.apache.ignite', name: 'ignite-slf4j', version: apacheIgnite
+
+        compile group: 'org.springframework.boot', name:'spring-boot-starter-data-jpa', version: springBootVersion
+        compile group: 'com.h2database', name :'h2', version: '1.4.197'
 
     }
 }

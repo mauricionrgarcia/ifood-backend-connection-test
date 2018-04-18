@@ -5,7 +5,6 @@ import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.configuration.*;
-import org.apache.ignite.springdata.repository.config.EnableIgniteRepositories;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,10 +13,11 @@ import javax.cache.expiry.Duration;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableIgniteRepositories
 public class ApacheIgniteConfiguration {
 
     private static final String CONNECTION_GRID = "restaurantConnectionGrid";
+    public static final String RESTAURANT_HEALTH_SIGNAL_CACHE = "RestaurantConnectionHealth";
+
     private static final int PORT = 47100;
 
     @Bean
@@ -49,7 +49,7 @@ public class ApacheIgniteConfiguration {
         restaurantConnectionHealthConfig.setCopyOnRead(false);
         restaurantConnectionHealthConfig.setBackups(0);
         restaurantConnectionHealthConfig.setAtomicityMode(CacheAtomicityMode.ATOMIC);
-        restaurantConnectionHealthConfig.setName("RestaurantConnectionHealth");
+        restaurantConnectionHealthConfig.setName(RESTAURANT_HEALTH_SIGNAL_CACHE);
         restaurantConnectionHealthConfig.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MINUTES, 2)));
 
         igniteConfiguration.setCacheConfiguration(restaurantConnectionHealthConfig);
