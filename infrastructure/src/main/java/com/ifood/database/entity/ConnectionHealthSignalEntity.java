@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class ConnectionHealthSignalEntity {
 
-    private String code;
-    private LocalDateTime receivedAt;
+    private final String code;
+    private final LocalDateTime receivedAt;
 
     public ConnectionHealthSignalEntity(String code, LocalDateTime receivedAt) {
         this.code = code;

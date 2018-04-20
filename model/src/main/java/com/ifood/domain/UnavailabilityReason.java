@@ -9,9 +9,13 @@ public enum UnavailabilityReason {
     OVERLOADED("overloaded due to offline orders"),
     HOLIDAYS("holidays");
 
-    private String description;
+    private final String description;
 
     UnavailabilityReason(String description) {
         this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

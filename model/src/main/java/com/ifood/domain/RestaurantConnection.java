@@ -15,7 +15,7 @@ public class RestaurantConnection {
      */
     private static final long ACCEPTABLE_SIGNAL_DELAY_IN_MINUTES = 2;
 
-    private List<ConnectionHealthSignal> connectionHealthSignals;
+    private final List<ConnectionHealthSignal> connectionHealthSignals;
 
     private final List<ConnectionPeriodAssessed> connectionFailed;
 

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiParam;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class RestaurantHealthHistoriesListRequest {
+class RestaurantHealthHistoriesListRequest {
     @ApiParam("Restaurants' codes")
     private List<String> restaurantCodes;
 

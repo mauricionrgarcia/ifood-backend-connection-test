@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableIgniteRepositories
-public class ApacheIgniteConfiguration {
+class ApacheIgniteConfiguration {
 
     private static final String CONNECTION_GRID = "restaurantConnectionGrid";
     private static final int PORT = 47100;

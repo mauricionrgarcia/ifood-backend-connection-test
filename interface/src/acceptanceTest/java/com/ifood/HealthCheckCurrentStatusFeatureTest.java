@@ -2,7 +2,6 @@ package com.ifood;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

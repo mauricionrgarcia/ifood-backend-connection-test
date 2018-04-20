@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class RestaurantRepositoryInmemory implements RestaurantRepository {
+class RestaurantRepositoryInmemory implements RestaurantRepository {
 
-    private List<RestaurantEntity> list = List.of( //
+    private final List<RestaurantEntity> list = List.of( //
             new RestaurantEntity("restaurant1"),
             new RestaurantEntity("restaurant2"),
             new RestaurantEntity("restaurant3"),
@@ -26,8 +26,8 @@ public class RestaurantRepositoryInmemory implements RestaurantRepository {
     }
 
     @Override
-    public boolean exists(String restaurantCode) {
-        return findRestaurant(restaurantCode) != null;
+    public boolean notExists(String restaurantCode) {
+        return findRestaurant(restaurantCode) == null;
     }
 
 }

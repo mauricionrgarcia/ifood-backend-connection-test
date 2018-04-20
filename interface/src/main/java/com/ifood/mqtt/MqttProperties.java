@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * Following the 12-factor practice
  */
 @Component
-public class MqttProperties {
+class MqttProperties {
 
     @Value("${ifood.mqtt.health.host}")
     private String mqttHealthHost;

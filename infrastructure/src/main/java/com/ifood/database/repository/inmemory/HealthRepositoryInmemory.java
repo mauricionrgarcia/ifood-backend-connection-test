@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class HealthRepositoryInmemory implements HealthRepository {
+class HealthRepositoryInmemory implements HealthRepository {
 
-    private List<ConnectionHealthSignalEntity> connectionHistories = new ArrayList<>();
+    private final List<ConnectionHealthSignalEntity> connectionHistories = new ArrayList<>();
 
     @Override
     public void insertSignalRegistry(ConnectionHealthSignalEntity connectionHealthSignalEntity) {

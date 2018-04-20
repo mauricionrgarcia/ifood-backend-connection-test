@@ -6,12 +6,16 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.Scanner;
 
-public class MqttIfoodHealthSignalClient {
+class MqttIfoodHealthSignalClient {
 
     public static void main(String[] args) throws MqttException {
         while(true) {
             System.out.print("Insert the restaurant code: ");
             String restaurantCode = new Scanner(System.in).next();
+
+            if(restaurantCode == null || restaurantCode.isEmpty()){
+                System.exit(0);
+            }
 
             sendHealthSignal(restaurantCode);
         }

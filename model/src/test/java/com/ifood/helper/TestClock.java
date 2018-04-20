@@ -4,7 +4,7 @@ import java.time.*;
 
 public class TestClock {
 
-    private static ZoneOffset BRAZIL_ZONEOFFSET = ZoneOffset.of("-3");
+    private static final ZoneOffset BRAZIL_ZONEOFFSET = ZoneOffset.of("-3");
 
     public static Clock getTodayAvailableAppTime(){
         int year = LocalDateTime.now().getYear();

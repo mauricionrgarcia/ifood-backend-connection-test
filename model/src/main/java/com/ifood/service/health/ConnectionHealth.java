@@ -4,9 +4,9 @@ import com.ifood.domain.RestaurantAvailability;
 
 public class ConnectionHealth {
 
-    private String restaurantCode;
-    private boolean currentHealth;
-    private RestaurantAvailability restaurantAvailability;
+    private final String restaurantCode;
+    private final boolean currentHealth;
+    private final RestaurantAvailability restaurantAvailability;
 
     ConnectionHealth(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
         this.restaurantCode = restaurantCode;

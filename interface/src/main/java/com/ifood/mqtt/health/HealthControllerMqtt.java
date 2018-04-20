@@ -8,7 +8,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class HealthControllerMqtt {
+class HealthControllerMqtt {
 
     @Autowired
     private HealthService healthService;

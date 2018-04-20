@@ -19,11 +19,11 @@ public class ConnectionPeriodAssessed {
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private ConnectionHealthSignal firstHealthSignal;
+    private final ConnectionHealthSignal firstHealthSignal;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private ConnectionHealthSignal secondHealthSignal;
+    private final ConnectionHealthSignal secondHealthSignal;
 
     private ConnectionDefinition connectionDefinition;
 
@@ -79,6 +79,6 @@ public class ConnectionPeriodAssessed {
         /**
          * App closed.
          */
-        APP_CLOSED;
+        APP_CLOSED
     }
 }

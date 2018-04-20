@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-public class HealthController {
+class HealthController {
 
     @Autowired
     private HealthService healthService;

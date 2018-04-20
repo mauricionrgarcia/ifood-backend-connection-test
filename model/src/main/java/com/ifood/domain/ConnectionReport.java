@@ -17,11 +17,11 @@ import static com.ifood.domain.ConnectionPeriodAssessed.ConnectionDefinition.*;
  */
 public class ConnectionReport {
 
-    private List<ConnectionPeriodAssessed> connectionSucceceded;
-    private List<ConnectionPeriodAssessed> connectionFailed;
-    private List<ConnectionPeriodAssessed> connectionIssuesScheduled;
-    private List<ConnectionPeriodAssessed> bussinessIssuesScheduled;
-    private List<ConnectionPeriodAssessed> appClosed;
+    private final List<ConnectionPeriodAssessed> connectionSucceceded;
+    private final List<ConnectionPeriodAssessed> connectionFailed;
+    private final List<ConnectionPeriodAssessed> connectionIssuesScheduled;
+    private final List<ConnectionPeriodAssessed> bussinessIssuesScheduled;
+    private final List<ConnectionPeriodAssessed> appClosed;
 
     public ConnectionReport() {
         this.connectionSucceceded = new ArrayList<>();
@@ -45,8 +45,8 @@ public class ConnectionReport {
                     .map(connectionPeriodAssessed -> assessSuccededConnectionPeriod(restaurantAvailability, connectionPeriodAssessed)).collect(Collectors.toList());
         }
 
-        supposedFailed.forEach(connectionPeriodAssessed -> defineFailedConnectionList(connectionPeriodAssessed));
-        supposedSucceded.forEach(connectionPeriodAssessed -> defineSuccededConnectionList(connectionPeriodAssessed));
+        supposedFailed.forEach(this::defineFailedConnectionList);
+        supposedSucceded.forEach(this::defineSuccededConnectionList);
     }
 
 
@@ -70,8 +70,8 @@ public class ConnectionReport {
             );
         }
 
-        supposedFailed.forEach(connectionPeriodAssessed -> defineFailedConnectionList(connectionPeriodAssessed));
-        supposedSucceded.forEach(connectionPeriodAssessed -> defineSuccededConnectionList(connectionPeriodAssessed));
+        supposedFailed.forEach(this::defineFailedConnectionList);
+        supposedSucceded.forEach(this::defineSuccededConnectionList);
     }
 
     private ConnectionPeriodAssessed assessSuccededConnectionPeriod(RestaurantAvailability restaurantAvailability, ConnectionPeriodAssessed connectionPeriodAssessed) {

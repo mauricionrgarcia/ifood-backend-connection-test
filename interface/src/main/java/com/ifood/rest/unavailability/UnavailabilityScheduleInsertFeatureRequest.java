@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiParam;
 
 import java.time.LocalDateTime;
 
-public class UnavailabilityScheduleInsertFeatureRequest {
+class UnavailabilityScheduleInsertFeatureRequest {
 
     @ApiParam("Restaurant unique code")
     private String restaurantCode;

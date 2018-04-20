@@ -6,7 +6,7 @@ public interface RestaurantRepository {
 
     RestaurantEntity findRestaurant(String restaurantCode);
 
-    boolean exists(String restaurantCode);
+    boolean notExists(String restaurantCode);
 
 
 }

@@ -16,10 +16,7 @@ public class ConnectionHealthSignal implements Comparable<ConnectionHealthSignal
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime receivedAt;
-
-    public ConnectionHealthSignal() {
-    }
+    private final LocalDateTime receivedAt;
 
     public ConnectionHealthSignal(ConnectionHealthSignalEntity healthHistory) {
         this.receivedAt = healthHistory.getReceivedAt();

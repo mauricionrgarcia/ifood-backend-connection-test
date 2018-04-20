@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UnavailabilityScheduleController {
+class UnavailabilityScheduleController {
 
     @Autowired
     private UnavailabilityScheduleService unavailabilityScheduleService;

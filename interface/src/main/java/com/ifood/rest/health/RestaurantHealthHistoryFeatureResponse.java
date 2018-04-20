@@ -4,13 +4,13 @@ import com.ifood.domain.ConnectionHealthSignal;
 
 import java.util.List;
 
-public class RestaurantHealthHistoryFeatureResponse {
+class RestaurantHealthHistoryFeatureResponse {
 
-    private String code;
+    private final String code;
 
-    private List<ConnectionHealthSignal> connections;
+    private final List<ConnectionHealthSignal> connections;
 
-    public RestaurantHealthHistoryFeatureResponse(String code, List<ConnectionHealthSignal> connectionHealthHistories) {
+    RestaurantHealthHistoryFeatureResponse(String code, List<ConnectionHealthSignal> connectionHealthHistories) {
         this.code = code;
         this.connections = connectionHealthHistories;
     }

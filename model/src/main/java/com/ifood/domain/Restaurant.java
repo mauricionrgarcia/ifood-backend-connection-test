@@ -1,6 +1,6 @@
 package com.ifood.domain;
 
-public class Restaurant {
+class Restaurant {
 
     private String code;
 

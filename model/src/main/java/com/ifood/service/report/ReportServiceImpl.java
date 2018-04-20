@@ -1,19 +1,17 @@
 package com.ifood.service.report;
 
 import com.ifood.domain.*;
-import com.ifood.service.unavailability.schedule.UnavailabilityScheduleService;
 import com.ifood.service.health.HealthService;
+import com.ifood.service.unavailability.schedule.UnavailabilityScheduleService;
 import org.apache.ignite.Ignite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 @Service
-public class ReportServiceImpl implements ReportService {
+class ReportServiceImpl implements ReportService {
 
     @Autowired
     private HealthService healthService;

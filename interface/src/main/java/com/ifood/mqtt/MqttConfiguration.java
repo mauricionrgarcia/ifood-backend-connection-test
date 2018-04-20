@@ -11,15 +11,12 @@ import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
-public class MqttConfiguration {
+class MqttConfiguration {
 
     @Autowired
     private MqttProperties mqttProperties;
 
-    @Bean
-    public MessageChannel mqttInputChannel() {
-        return new DirectChannel();
-    }
+    private static final MessageChannel mqttInputChannel = new DirectChannel();
 
     @Bean
     public MessageProducer inbound() {
@@ -30,7 +27,7 @@ public class MqttConfiguration {
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
-        adapter.setOutputChannel(mqttInputChannel());
+        adapter.setOutputChannel(mqttInputChannel);
         return adapter;
     }
 }

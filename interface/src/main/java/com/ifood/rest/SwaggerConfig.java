@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -25,7 +25,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo metadateApi() {
-        ApiInfo apiInfo = new ApiInfo(
+        return new ApiInfo(
                 "iFood-Connection",
                 "Api to control the functionalities related to connection control with the restaurants",
                 "0.0.1",
@@ -35,6 +35,5 @@ public class SwaggerConfig {
                 "",
                 new ArrayList<>()
         );
-        return apiInfo;
     }
 }

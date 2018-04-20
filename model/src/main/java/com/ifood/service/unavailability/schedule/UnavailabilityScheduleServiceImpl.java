@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UnavailabilityScheduleServiceImpl implements UnavailabilityScheduleService {
+class UnavailabilityScheduleServiceImpl implements UnavailabilityScheduleService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
@@ -33,7 +33,7 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
             throw new IllegalArgumentException("Invalid reason.");
         }
 
-        boolean unavailabilityExists = unavailabilityScheduleRepository.exists(restaurantCode, startDate, endDate);
+        boolean unavailabilityExists = unavailabilityScheduleRepository.exists();
         if(unavailabilityExists){
             throw new IllegalArgumentException("Unavailability repository already exists.");
         }
@@ -46,12 +46,12 @@ public class UnavailabilityScheduleServiceImpl implements UnavailabilitySchedule
 
     @Override
     public List<UnavailabilitySchedule> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
-        boolean notExists = !restaurantRepository.exists(restaurantCode);
+        boolean notExists = restaurantRepository.notExists(restaurantCode);
         if(notExists){
             throw new IllegalArgumentException("Restaurant not found.");
         }
 
-        return unavailabilityScheduleRepository.fetchUnavailabilitySchedule(restaurantCode, startDate, endDate) //
+        return unavailabilityScheduleRepository.fetchUnavailabilitySchedule(startDate, endDate) //
                 .stream().map(UnavailabilitySchedule::new).collect(Collectors.toList());
     }
 

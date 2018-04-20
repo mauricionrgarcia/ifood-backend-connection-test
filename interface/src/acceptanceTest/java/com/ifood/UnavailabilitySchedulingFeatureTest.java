@@ -49,8 +49,7 @@ public class UnavailabilitySchedulingFeatureTest {
     }
 
     private String scheduleUnavailability(String restaurantCode, String scheduleStart, String scheduleEnd, UnavailabilityReason unavailabilityReason) {
-        String scheduleCode =
-        given()
+        return given()
                 .contentType(ContentType.JSON)
                 .content("{\n" +
                         "  \"restaurantCode\": \"" + restaurantCode +"\",\n" +
@@ -63,7 +62,6 @@ public class UnavailabilitySchedulingFeatureTest {
         .then()
                 .statusCode(200)
         .extract().asString();
-        return scheduleCode;
     }
 
 

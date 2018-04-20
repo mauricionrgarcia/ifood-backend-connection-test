@@ -28,7 +28,7 @@ public class ReporterFeatureTest {
         waitSignal();
         sendHealthSignal(restaurantCode);
 
-        resquestReport(restaurantCode, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
+        requestReport(restaurantCode, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
     }
 
     private void waitSignal() {
@@ -46,7 +46,7 @@ public class ReporterFeatureTest {
                 .statusCode(200);
     }
 
-    private void resquestReport(String restaurantCode, LocalDateTime reportStart, LocalDateTime reportEnd) {
+    private void requestReport(String restaurantCode, LocalDateTime reportStart, LocalDateTime reportEnd) {
 
         ValidatableResponse response = when()
                 .get("/connection/report/{restaurant_code}/{reportStart}/{reportEnd}",
