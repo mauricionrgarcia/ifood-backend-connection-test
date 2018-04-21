@@ -41,11 +41,11 @@ class ApacheIgniteConfiguration {
         configurePersistence(igniteConfiguration);
 
         // connector configuration
-        ConnectorConfiguration connectorConfiguration=new ConnectorConfiguration();
+        ConnectorConfiguration connectorConfiguration = new ConnectorConfiguration();
         connectorConfiguration.setPort(PORT);
 
 
-        CacheConfiguration restaurantConnectionHealthConfig=new CacheConfiguration();
+        CacheConfiguration restaurantConnectionHealthConfig = new CacheConfiguration();
         restaurantConnectionHealthConfig.setCopyOnRead(false);
         restaurantConnectionHealthConfig.setBackups(0);
         restaurantConnectionHealthConfig.setAtomicityMode(CacheAtomicityMode.ATOMIC);
@@ -57,21 +57,15 @@ class ApacheIgniteConfiguration {
     }
 
     private void configurePersistence(IgniteConfiguration igniteConfiguration) {
-        PersistentStoreConfiguration persistentStoreConfiguration = new PersistentStoreConfiguration();
-        persistentStoreConfiguration.setPersistentStorePath("./data/store");
-        persistentStoreConfiguration.setWalArchivePath("./data/walArchive");
-        persistentStoreConfiguration.setWalStorePath("./data/walStore");
-        igniteConfiguration.setPersistentStoreConfiguration(persistentStoreConfiguration);
+        DataStorageConfiguration dataStorageConfiguration = new DataStorageConfiguration();
+        dataStorageConfiguration.setWalArchivePath("./data/walArchive");
+        igniteConfiguration.setDataStorageConfiguration(dataStorageConfiguration);
     }
 
     @Bean(destroyMethod = "close")
     public Ignite igniteInstance(IgniteConfiguration igniteConfiguration) throws IgniteException {
         IgniteConfiguration cfg = new IgniteConfiguration();
-
-        Ignite start = Ignition.start(igniteConfiguration);
-        start.active(true);
-        return start;
-
+        return Ignition.start(igniteConfiguration);
     }
 
 
