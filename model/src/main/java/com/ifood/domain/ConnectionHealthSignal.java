@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.ifood.database.entity.ConnectionHealthSignalEntity;
+import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public class ConnectionHealthSignal implements Comparable<ConnectionHealthSignal
 
     @Override
     public int compareTo(ConnectionHealthSignal otherObject) {
+        Assert.notNull(otherObject, "Invalid object to compare.");
         return this.receivedAt.compareTo(otherObject.receivedAt);
     }
 

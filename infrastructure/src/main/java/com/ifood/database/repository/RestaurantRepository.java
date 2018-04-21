@@ -8,5 +8,4 @@ public interface RestaurantRepository {
 
     boolean notExists(String restaurantCode);
 
-
 }

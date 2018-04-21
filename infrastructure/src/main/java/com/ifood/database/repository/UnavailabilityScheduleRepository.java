@@ -9,7 +9,7 @@ public interface UnavailabilityScheduleRepository {
 
     boolean exists();
 
-    List<UnavailabilityScheduleEntity> fetchUnavailabilitySchedule(LocalDateTime startDate, LocalDateTime endDate);
+    List<UnavailabilityScheduleEntity> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
 
     void deleteSchedule(String scheduleId);
 

@@ -12,5 +12,5 @@ public interface UnavailabilityScheduleService {
 
     List<UnavailabilitySchedule> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate);
 
-    void deleteSchedule(String scheduleId);
+    void deleteSchedule(String scheduleCode);
 }

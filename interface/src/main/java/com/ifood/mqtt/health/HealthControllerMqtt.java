@@ -15,7 +15,7 @@ class HealthControllerMqtt {
 
     /**
      * Receive the signal sent by the restaurant.
-     * @return
+     * @return the message handler.
      */
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")

@@ -1,14 +1,12 @@
-package com.ifood.service.health;
+package com.ifood.domain;
 
-import com.ifood.domain.RestaurantAvailability;
-
-public class ConnectionHealth {
+public class ConnectionHealthCurrentStatus {
 
     private final String restaurantCode;
     private final boolean currentHealth;
     private final RestaurantAvailability restaurantAvailability;
 
-    ConnectionHealth(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
+    public ConnectionHealthCurrentStatus(String restaurantCode, boolean currentHealth, RestaurantAvailability restaurantAvailability) {
         this.restaurantCode = restaurantCode;
         this.currentHealth = currentHealth;
         this.restaurantAvailability = restaurantAvailability;

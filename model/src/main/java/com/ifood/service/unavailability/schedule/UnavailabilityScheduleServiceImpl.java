@@ -8,6 +8,7 @@ import com.ifood.domain.UnavailabilityReason;
 import com.ifood.domain.UnavailabilitySchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,13 +25,15 @@ class UnavailabilityScheduleServiceImpl implements UnavailabilityScheduleService
 
     @Override
     public String insertSchedule(String restaurantCode, UnavailabilityReason reason, LocalDateTime startDate, LocalDateTime endDate) {
+        Assert.notNull(restaurantCode, "The restaurant code should not be null");
+        Assert.notNull(reason, "The reason should not be null");
+        Assert.notNull(startDate, "The start date should not be null");
+        Assert.notNull(endDate, "The end date should not be null");
+        Assert.isTrue(startDate.isBefore(endDate), "The start date / end date is invalid");
+
         RestaurantEntity restaurant = restaurantRepository.findRestaurant(restaurantCode);
         if(restaurant == null){
             throw new IllegalArgumentException("Restaurant not found.");
-        }
-
-        if(reason == null){
-            throw new IllegalArgumentException("Invalid reason.");
         }
 
         boolean unavailabilityExists = unavailabilityScheduleRepository.exists();
@@ -46,17 +49,23 @@ class UnavailabilityScheduleServiceImpl implements UnavailabilityScheduleService
 
     @Override
     public List<UnavailabilitySchedule> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
+        Assert.notNull(restaurantCode, "The restaurant code should not be null");
+        Assert.notNull(startDate, "The start date should not be null");
+        Assert.notNull(endDate, "The end date should not be null");
+        Assert.isTrue(startDate.isBefore(endDate), "The start date / end date is invalid");
+
         boolean notExists = restaurantRepository.notExists(restaurantCode);
         if(notExists){
             throw new IllegalArgumentException("Restaurant not found.");
         }
 
-        return unavailabilityScheduleRepository.fetchUnavailabilitySchedule(startDate, endDate) //
+        return unavailabilityScheduleRepository.fetchUnavailabilitySchedule(restaurantCode, startDate, endDate)
                 .stream().map(UnavailabilitySchedule::new).collect(Collectors.toList());
     }
 
     @Override
-    public void deleteSchedule(String scheduleId) {
-        unavailabilityScheduleRepository.deleteSchedule(scheduleId);
+    public void deleteSchedule(String scheduleCode) {
+        Assert.notNull(scheduleCode, "The schedule code should not be null");
+        unavailabilityScheduleRepository.deleteSchedule(scheduleCode);
     }
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
-public class ConnectionHealthSignalTest {
+public class ConnectionHealthCurrentStatusSignalTest {
 
     @Test
     public void testDifferenceBetweenSignals() {

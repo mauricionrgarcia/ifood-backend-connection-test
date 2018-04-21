@@ -19,8 +19,9 @@ class UnavailabilityScheduleRepositoryInmemory implements UnavailabilitySchedule
     }
 
     @Override
-    public List<UnavailabilityScheduleEntity> fetchUnavailabilitySchedule(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<UnavailabilityScheduleEntity> fetchUnavailabilitySchedule(String restaurantCode, LocalDateTime startDate, LocalDateTime endDate) {
         return list.stream().filter(unavailabilityScheduleEntity ->
+                unavailabilityScheduleEntity.getCode().equals(restaurantCode) &&
                 (unavailabilityScheduleEntity.getScheduleStart().isAfter(startDate) && unavailabilityScheduleEntity.getScheduleEnd().isBefore(endDate)) ||
                         (startDate.isAfter(unavailabilityScheduleEntity.getScheduleStart()) && startDate.isBefore(unavailabilityScheduleEntity.getScheduleEnd()) ||
                         (endDate.isAfter(unavailabilityScheduleEntity.getScheduleStart()) && endDate.isBefore(unavailabilityScheduleEntity.getScheduleEnd())))
