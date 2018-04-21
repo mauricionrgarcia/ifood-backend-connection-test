@@ -1,4 +1,4 @@
-package com.ifood.model;
+package com.ifood.domain;
 
 import com.ifood.domain.*;
 import com.ifood.helper.TestClock;

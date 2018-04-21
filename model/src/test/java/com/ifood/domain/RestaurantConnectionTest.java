@@ -1,4 +1,4 @@
-package com.ifood.model;
+package com.ifood.domain;
 
 import com.ifood.domain.ConnectionHealthSignal;
 import com.ifood.domain.ConnectionPeriodAssessed;

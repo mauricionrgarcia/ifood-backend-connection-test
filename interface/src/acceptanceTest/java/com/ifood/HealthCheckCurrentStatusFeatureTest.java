@@ -26,10 +26,8 @@ public class HealthCheckCurrentStatusFeatureTest {
 
     private void checkIfOnline(String restaurantCode) {
         Response post = given()
-                .content("[ \"" + restaurantCode + "\"]")
-                .contentType(ContentType.JSON)
                 .when()
-                .post("/connection/health/online/list");
+                .get("/connection/health/online/list/restaurant1");
 
         LocalDateTime localDateTime = LocalDateTime.now();
         if(localDateTime .getHour() < 9 || localDateTime.getHour() == 23){

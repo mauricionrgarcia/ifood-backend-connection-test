@@ -38,8 +38,8 @@ class HealthController {
 
 
     @ApiOperation(value="Inform if the restaurants in the given list are online or not")
-    @RequestMapping(value = "/connection/health/online/list", method = RequestMethod.POST)
-    public List<ConnectionHealthCurrentStatus> checkIfOnline(@ApiParam("Restaurants' codes") @RequestBody List<String> restaurantCodes){
+    @RequestMapping(value = "/connection/health/online/list/{restaurant_codes}", method = RequestMethod.GET)
+    public List<ConnectionHealthCurrentStatus> checkIfOnline(@ApiParam("Restaurants' codes") @PathVariable("restaurant_codes") List<String> restaurantCodes){
         return healthService.checkRestaurantsConnection(restaurantCodes);
     }
 
